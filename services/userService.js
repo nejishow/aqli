@@ -1,6 +1,6 @@
 import axios from 'axios'
 const apiClient = axios.create({
-  baseURL: `https://git.heroku.com/aqli-ecommerce.git`
+  baseURL: 'https://aqli-ecommerce.herokuapp.com'
 })
 apiClient.interceptors.request.use((config) => {
   config.headers.common.Authorization =
