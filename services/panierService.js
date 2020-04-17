@@ -1,7 +1,8 @@
 import axios from 'axios'
 
 const panierClient = axios.create({
-  baseURL: `http://localhost:3000`,
+  baseURL: `https://git.heroku.com/aqli-ecommerce.git
+`,
   withCredentials: false,
   headers: {
     Accept: 'application/json',
