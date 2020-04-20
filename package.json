@@ -1,7 +1,7 @@
 {
-  "name": "Aqli",
+  "name": "aqli",
   "version": "1.0.0",
-  "description": "E-commerce à Djibouti",
+  "description": "E-commerce à Djibouti. Découvrer Aqli, le premier site de vente en ligne et de livraison à Djibouti",
   "author": "Ashraf Mohamed",
   "private": true,
   "scripts": {
@@ -15,6 +15,7 @@
     "@mdi/font": "^5.0.45",
     "@nuxtjs/axios": "^5.3.6",
     "@nuxtjs/pwa": "^3.0.0-0",
+    "@nuxtjs/sitemap": "^2.2.0",
     "bootstrap": "^4.4.1",
     "jquery": "^3.5.0",
     "nuxt": "^2.0.0"

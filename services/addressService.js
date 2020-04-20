@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-const panierClient = axios.create({
+const addressClient = axios.create({
   baseURL: 'http://localhost:3000',
   withCredentials: false,
   headers: {
@@ -8,40 +8,40 @@ const panierClient = axios.create({
     'Content-Type': 'application/json'
   }
 })
-panierClient.interceptors.request.use((config) => {
+addressClient.interceptors.request.use((config) => {
   config.headers.common.Authorization =
     'Bearer ' + localStorage.getItem('token')
   return config
 })
 
 export default {
-  getPanier() {
-    return panierClient.get('/panier')
+  getAlladdress() {
+    return addressClient.get('/alladdress')
   },
   deleteItem(id) {
-    return panierClient.delete('/panier/' + id)
+    return addressClient.delete('/panier/' + id)
   },
   deleteAll() {
-    return panierClient.delete('/panier')
+    return addressClient.delete('/panier')
   },
   addPanier(achat) {
-    return panierClient.post('/panier', {
+    return addressClient.post('/panier', {
       params: achat
     }) // add panier
   },
   changeQuantity(id, quantity) {
-    return panierClient.patch('/panier/' + id, {
+    return addressClient.patch('/panier/' + id, {
       params: {
         quantity
       }
     })
   },
   addCommand(command) {
-    return panierClient.post('/command', {
+    return addressClient.post('/command', {
       params: command
     }) // add command
   },
   getCommand(id) {
-    return panierClient.get('/command/' + id) // add command
+    return addressClient.get('/command/' + id) // add command
   }
 }

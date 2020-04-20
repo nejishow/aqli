@@ -2,7 +2,9 @@
   <!-- Stack the columns on mobile by making one full-width and the other half-width -->
   <div>
     <div class="row">
-      <div class="col-sm-12 col-md-9"></div>
+      <div class="col-sm-12 col-md-9">
+        Acceuil
+      </div>
     </div>
   </div>
 </template>

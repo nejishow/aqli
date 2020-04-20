@@ -108,8 +108,13 @@ export default {
   async mounted() {
     try {
       await this.$store.dispatch('categoryMenu/fetchCategoryMenu')
-      await this.$store.dispatch('user/getUser')
-      await this.$store.dispatch('panier/setPanier')
+      if (
+        localStorage.getItem('token') !== null &&
+        localStorage.getItem('token') !== undefined
+      ) {
+        await this.$store.dispatch('user/getUser')
+        await this.$store.dispatch('panier/setPanier')
+      }
     } catch (e) {}
   },
   methods: {

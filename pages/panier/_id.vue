@@ -77,7 +77,7 @@
           <div class="card-body">
             <h5 class="card-title">Total</h5>
             <h6 class="card-subtitle mb-2 text-muted">
-              {{ panier.length }} produit(s)
+              {{ totalProduct }} produit(s)
             </h6>
             <p class="card-text font-weight-bold h4 text-danger">
               {{ totalCommande }} FDj
@@ -85,7 +85,7 @@
           </div>
         </div>
         <div class="text-right mt-3">
-          <router-link :to="{ path: '/buynow' + getId }">
+          <router-link :to="{ path: '/buynow/' + getId }">
             <button v-show="panier.length > 0" class="btn btn-success">
               Faire une commande
             </button>
@@ -111,12 +111,19 @@ export default {
   computed: {
     ...mapGetters({
       panier: 'panier/getPanier',
-      getId: 'user/id'
+      getId: 'user/getId'
     }),
     totalCommande() {
       let total = 0
       this.panier.forEach((element) => {
-        total = total + element.quantity * element.price
+        total += element.quantity * element.price
+      })
+      return total
+    },
+    totalProduct() {
+      let total = 0
+      this.panier.forEach((element) => {
+        total = total + element.quantity
       })
       return total
     }

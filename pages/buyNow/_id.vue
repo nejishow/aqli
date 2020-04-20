@@ -19,24 +19,9 @@
     <div class="row">
       <div class="col-sm-12 col-md-8">
         <div v-show="panier.length >= 1" class="row">
-          <div v-if="!user.address" class="col-sm-12 card border-info">
+          <div v-if="user.address" class="col-sm-12 card border-info">
             <h5>Addresse de livraison</h5>
             <p>Votre point de livraison actuelle: {{ user.address }}</p>
-            <p>
-              Si vous le souhaitez vous pouvez choisir un autre point de
-              livraison pour cette commande
-            </p>
-            <v-container fluid>
-              <v-row align="center">
-                <v-col class="d-flex" cols="12" sm="6">
-                  <v-select label="Quartier" outlined></v-select>
-                </v-col>
-
-                <v-col class="d-flex" cols="12" sm="6">
-                  <v-select label="Point de livraison" outlined></v-select>
-                </v-col>
-              </v-row>
-            </v-container>
           </div>
           <div v-if="!user.address" class="col-sm-12 card border-danger">
             <h5 class="text-danger font-weight-bold">Addresse nescessaire</h5>
@@ -101,7 +86,7 @@
         </div>
         <div class="text-right mt-3">
           <button
-            v-if="panier.length >= 1 && user.address"
+            v-if="panier.length >= 1 && user.address && !sent"
             class="btn btn-success"
             @click="command"
           >
@@ -127,7 +112,8 @@ export default {
     return {
       total: 0,
       finalcommand: [],
-      commands: []
+      commands: [],
+      sent: false
     }
   },
   computed: {
@@ -136,20 +122,26 @@ export default {
       user: 'user/getUser'
     }),
     totalCommande() {
+      this.total0()
       this.panier.forEach((element) => {
-        this.total = this.total + element.quantity * element.price
+        this.total += element.quantity * element.price
       })
       return this.total + 500
     }
   },
   methods: {
+    total0() {
+      return (this.total = 0)
+    },
     async command() {
+      this.sent = true
       await this.panier.forEach((element) => {
         this.commands.push({
           idProduct: element.idProduct,
           src: element.src,
           name: element.name,
-          quantity: element.quantity
+          quantity: element.quantity,
+          price: element.price
         })
       })
       this.finalcommand = {
@@ -158,11 +150,18 @@ export default {
         received: false,
         enabled: true
       }
-      panierService.addCommand(this.finalcommand).then(async (response) => {
-        await this.$store.dispatch('panier/deleteAllPanier').then(async () => {
-          await this.$router.push('/receipt/' + response.data._id)
+      panierService
+        .addCommand(this.finalcommand)
+        .then(async (response) => {
+          await this.$store
+            .dispatch('panier/deleteAllPanier')
+            .then(async () => {
+              await this.$router.push('/receipt/' + response.data._id)
+            })
         })
-      })
+        .catch((error) => {
+          console.log(error.response)
+        })
     }
   },
   head() {

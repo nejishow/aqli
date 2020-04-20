@@ -18,7 +18,6 @@ export default {
    */
   head: {
     titleTemplate: '%s - ' + process.env.npm_package_name,
-    title: process.env.npm_package_name || '',
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
@@ -26,7 +25,8 @@ export default {
         hid: 'description',
         name: 'description',
         content: process.env.npm_package_description || ''
-      }
+      },
+      { name: 'keywords', content: 'aqli, ecommerce, djibouti, livraison, 24h' }
     ],
     link: [
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
@@ -72,8 +72,20 @@ export default {
   modules: [
     // Doc: https://axios.nuxtjs.org/usage
     '@nuxtjs/axios',
-    '@nuxtjs/pwa'
+    '@nuxtjs/pwa',
+    '@nuxtjs/sitemap'
   ],
+  sitemap: {
+    hostname: 'https://aqli.shop',
+    gzip: true,
+    routes: () => {
+      return menuService.getCategory().then((response) => {
+        return response.data.map((event) => {
+          return '/subCategory/' + event._id
+        })
+      })
+    }
+  },
   /*
    ** Axios module configuration
    ** See https://axios.nuxtjs.org/options

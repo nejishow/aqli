@@ -45,27 +45,27 @@ export const actions = {
     })
   },
   getUser({ commit }) {
-    if (
-      localStorage.getItem('token') !== null &&
-      localStorage.getItem('token') !== undefined
-    ) {
-      return UserService.getUser()
-        .then(async (response) => {
-          await commit('SET_USER', response.data)
-          await commit('SET_ID', localStorage.getItem('id'))
-          await commit('SET_TOKEN', localStorage.getItem('token'))
-        })
-        .catch((error) => {
-          if (error.response.status === 401) {
-            return UserService.logoutUser()
-              .then(async () => {
-                await commit('LOGOUT')
-              })
-              .catch(async () => {
-                await commit('LOGOUT')
-              })
-          }
-        })
-    }
+    return UserService.getUser()
+      .then(async (response) => {
+        await commit('SET_USER', response.data)
+        await commit('SET_ID', localStorage.getItem('id'))
+        await commit('SET_TOKEN', localStorage.getItem('token'))
+      })
+      .catch((error) => {
+        if (error.response.status === 401) {
+          return UserService.logoutUser()
+            .then(async () => {
+              await commit('LOGOUT')
+            })
+            .catch(async () => {
+              await commit('LOGOUT')
+            })
+        }
+      })
+  },
+  patchUser({ commit }, payload) {
+    return UserService.modifyUser(payload).then((response) => {
+      commit('SET_USER', response.data)
+    })
   }
 }

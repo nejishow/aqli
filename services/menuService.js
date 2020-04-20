@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 const menuClient = axios.create({
-  baseURL: 'https://aqli-ecommerce.herokuapp.com',
+  baseURL: 'http://localhost:3000', // https://aqli-ecommerce.herokuapp.com
   withCredentials: false,
   headers: {
     Accept: 'application/json',
