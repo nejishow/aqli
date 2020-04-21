@@ -3,7 +3,7 @@
   <div>
     <div class="row">
       <div class="col-sm-12 col-md-9">
-        Acceuil
+        Acceuil Indexed
       </div>
     </div>
   </div>
@@ -11,7 +11,6 @@
 
 <script>
 // import { mapActions } from 'vuex'
-
 export default {
   async fetch({ store, error }) {
     try {
@@ -30,6 +29,7 @@ export default {
       visible: true
     }
   },
+  computed: {},
   methods: {
     // ...mapActions({ setUser: 'setUser' }),
     onSlideStart() {

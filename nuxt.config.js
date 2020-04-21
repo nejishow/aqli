@@ -6,10 +6,19 @@ export default {
   generate: {
     fallback: true,
     routes: () => {
-      return menuService.getCategory().then((response) => {
+      const sub = menuService.getCategory().then((response) => {
         return response.data.map((event) => {
           return '/subCategory/' + event._id
         })
+      })
+      const prod = menuService.getAllProductType().then((response) => {
+        return response.data.map((event) => {
+          return 'productType/' + event._id
+        })
+      })
+      const ind = ['index', 'login', 'signUp']
+      return Promise.all([ind, prod, sub]).then((values) => {
+        return values.join().split(',')
       })
     }
   },
@@ -73,18 +82,57 @@ export default {
     // Doc: https://axios.nuxtjs.org/usage
     '@nuxtjs/axios',
     '@nuxtjs/pwa',
-    '@nuxtjs/sitemap'
+    '@nuxtjs/sitemap',
+    '@nuxtjs/robots'
   ],
   sitemap: {
     hostname: 'https://aqli.shop',
     gzip: true,
+    path: '/sitemap.xml',
+    generate: true,
     routes: () => {
-      return menuService.getCategory().then((response) => {
+      const sub = menuService.getCategory().then((response) => {
         return response.data.map((event) => {
           return '/subCategory/' + event._id
         })
       })
+      const prod = menuService.getAllProductType().then((response) => {
+        return response.data.map((event) => {
+          return 'productType/' + event._id
+        })
+      })
+      const ind = ['index', 'login', 'signUp']
+      return Promise.all([ind, prod, sub]).then((values) => {
+        return values.join().split(',')
+      })
     }
+    // sitemaps: [
+    //   {
+    //     path: '/sitemap.xml',
+    //     routes: ['index', 'login', 'signUp'],
+    //     gzip: true
+    //   },
+    //   {
+    //     path: '/subCategory/sitemap-sub.xml',
+    //     routes: () => {
+    //       return menuService.getCategory().then((response) => {
+    //         return response.data.map((event) => {
+    //           return '/subCategory/' + event._id
+    //         })
+    //       })
+    //     }
+    //   },
+    //   {
+    //     path: '/productType/sitemap-productType.xml',
+    //     routes: () => {
+    //       return menuService.getAllProductType().then((response) => {
+    //         return response.data.map((event) => {
+    //           return 'productType/' + event._id
+    //         })
+    //       })
+    //     }
+    //   }
+    // ]
   },
   /*
    ** Axios module configuration
@@ -112,6 +160,11 @@ export default {
         }
       }
     }
+  },
+  robots: {
+    UserAgent: '*',
+    Allow: '*',
+    Sitemap: (req) => `https://aqli.shop/sitemap.xml`
   },
   /*
    ** Build configuration
