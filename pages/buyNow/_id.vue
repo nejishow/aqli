@@ -159,9 +159,7 @@ export default {
               await this.$router.push('/receipt/' + response.data._id)
             })
         })
-        .catch((error) => {
-          console.log(error.response)
-        })
+        .catch(() => {})
     }
   },
   head() {

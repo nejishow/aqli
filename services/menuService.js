@@ -19,6 +19,9 @@ export default {
   getAllProductType() {
     return menuClient.get('/allProductType')
   },
+  getAllProduct() {
+    return menuClient.get('/allProduct')
+  },
   getProductType(id) {
     return menuClient.get('/productType/' + id)
   },

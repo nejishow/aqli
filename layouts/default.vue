@@ -11,7 +11,10 @@
         <v-list-item
           v-for="(item, i) in getCategoryMenu"
           :key="i"
-          :to="{ path: '/subCategory/' + item._id, query: { name: item.name } }"
+          :to="{
+            path: '/' + item.name,
+            query: { id: item._id }
+          }"
           router
           exact
         >

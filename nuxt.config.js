@@ -3,39 +3,14 @@ import menuService from './services/menuService.js'
 
 export default {
   mode: 'spa',
-  generate: {
-    fallback: true,
-    routes: () => {
-      const sub = menuService.getCategory().then((response) => {
-        return response.data.map((event) => {
-          return '/subCategory/' + event._id
-        })
-      })
-      const prod = menuService.getAllProductType().then((response) => {
-        return response.data.map((event) => {
-          return 'productType/' + event._id
-        })
-      })
-      const ind = ['index', 'login', 'signUp']
-      return Promise.all([ind, prod, sub]).then((values) => {
-        return values.join().split(',')
-      })
-    }
-  },
   /*
    ** Headers of the page
    */
   head: {
-    titleTemplate: '%s - ' + process.env.npm_package_name,
+    titleTemplate: '%s | Aqli',
     meta: [
       { charset: 'utf-8' },
-      { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-      {
-        hid: 'description',
-        name: 'description',
-        content: process.env.npm_package_description || ''
-      },
-      { name: 'keywords', content: 'aqli, ecommerce, djibouti, livraison, 24h' }
+      { name: 'viewport', content: 'width=device-width, initial-scale=1' }
     ],
     link: [
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
@@ -89,50 +64,27 @@ export default {
     hostname: 'https://aqli.shop',
     gzip: true,
     path: '/sitemap.xml',
-    generate: true,
     routes: () => {
-      const sub = menuService.getCategory().then((response) => {
+      const cat = menuService.getCategory().then((response) => {
         return response.data.map((event) => {
-          return '/subCategory/' + event._id
+          return '/' + event.name + '/'
         })
       })
-      const prod = menuService.getAllProductType().then((response) => {
+      const productType = menuService.getAllProductType().then((response) => {
         return response.data.map((event) => {
-          return 'productType/' + event._id
+          return 'productType/' + event.name
         })
       })
-      const ind = ['index', 'login', 'signUp']
-      return Promise.all([ind, prod, sub]).then((values) => {
+
+      const product = menuService.getAllProduct().then((response) => {
+        return response.data.map((event) => {
+          return '/product/' + event.name + '/'
+        })
+      })
+      return Promise.all([cat, productType, product]).then((values) => {
         return values.join().split(',')
       })
     }
-    // sitemaps: [
-    //   {
-    //     path: '/sitemap.xml',
-    //     routes: ['index', 'login', 'signUp'],
-    //     gzip: true
-    //   },
-    //   {
-    //     path: '/subCategory/sitemap-sub.xml',
-    //     routes: () => {
-    //       return menuService.getCategory().then((response) => {
-    //         return response.data.map((event) => {
-    //           return '/subCategory/' + event._id
-    //         })
-    //       })
-    //     }
-    //   },
-    //   {
-    //     path: '/productType/sitemap-productType.xml',
-    //     routes: () => {
-    //       return menuService.getAllProductType().then((response) => {
-    //         return response.data.map((event) => {
-    //           return 'productType/' + event._id
-    //         })
-    //       })
-    //     }
-    //   }
-    // ]
   },
   /*
    ** Axios module configuration

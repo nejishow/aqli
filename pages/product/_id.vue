@@ -255,7 +255,7 @@ export default {
   mounted() {
     // retrieve this product whole details
     productService
-      .getProduct(this.$route.params.id)
+      .getProduct(this.$route.query.id)
       .then(async (response) => {
         this.product = response.data
         this.src = this.product.pics[0].src
