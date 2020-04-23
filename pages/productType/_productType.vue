@@ -89,7 +89,7 @@ export default {
           name: 'description',
           content:
             'Decouvrer ici une multitude produits de la catégorie: ' +
-            this.$route.query.name
+            this.$route.params.productType
         },
         {
           name: 'keywords',

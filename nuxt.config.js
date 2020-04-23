@@ -10,7 +10,19 @@ export default {
     titleTemplate: '%s | Aqli',
     meta: [
       { charset: 'utf-8' },
-      { name: 'viewport', content: 'width=device-width, initial-scale=1' }
+      { name: 'viewport', content: 'width=device-width, initial-scale=1' },
+      {
+        hid: 'og:title',
+        name: 'og:title',
+        property: 'og:title',
+        content: 'Aqli'
+      },
+      {
+        hid: 'og:site_name',
+        name: 'og:site_name',
+        property: 'og:site_name',
+        content: 'Aqli'
+      }
     ],
     link: [
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
@@ -67,18 +79,18 @@ export default {
     routes: () => {
       const cat = menuService.getCategory().then((response) => {
         return response.data.map((event) => {
-          return '/' + event.name + '/'
+          return '/' + event.name + '?id=' + event._id
         })
       })
       const productType = menuService.getAllProductType().then((response) => {
         return response.data.map((event) => {
-          return 'productType/' + event.name
+          return 'productType/' + event.name + '?id=' + event._id
         })
       })
 
       const product = menuService.getAllProduct().then((response) => {
         return response.data.map((event) => {
-          return '/product/' + event.name + '/'
+          return '/product/' + event.name + '?id=' + event._id
         })
       })
       return Promise.all([cat, productType, product]).then((values) => {

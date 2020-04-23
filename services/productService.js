@@ -1,6 +1,6 @@
 import axios from 'axios'
 const productClient = axios.create({
-  baseURL: 'https://aqli-ecommerce.herokuapp.com',
+  baseURL: 'http://localhost:3000',
   headers: {
     Accept: 'application/json',
     'Content-Type': 'application/json'

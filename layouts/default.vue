@@ -7,7 +7,7 @@
       fixed
       app
     >
-      <v-list>
+      <v-list dense nav>
         <v-list-item
           v-for="(item, i) in getCategoryMenu"
           :key="i"
@@ -48,7 +48,7 @@
       </v-container>
     </v-content>
     <v-navigation-drawer v-model="rightDrawer" :right="right" temporary fixed>
-      <v-list>
+      <v-list dense nav permanent>
         <v-list-item router exact to="/">
           <v-list-item-content>
             <v-list-item-title>Acceuil</v-list-item-title>

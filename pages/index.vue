@@ -3,8 +3,7 @@
   <div>
     <div class="row">
       <div class="col-sm-12 col-md-9">
-        Acceuil Indexed
-        <button class="btn btn-group">click</button>
+        Acceuil AQLI
       </div>
     </div>
   </div>
