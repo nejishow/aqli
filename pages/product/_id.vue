@@ -67,7 +67,7 @@
               <hr />
               <h5>Couleurs:</h5>
               <div
-                v-for="(item, index) in attributes.Couleurs"
+                v-for="(item, index) in product.Couleurs"
                 :key="index"
                 class="d-inline"
               >
@@ -88,7 +88,7 @@
               <hr />
               <h5>Tailles:</h5>
               <div
-                v-for="(item, index) in attributes.Tailles"
+                v-for="(item, index) in product.Tailles"
                 :key="index"
                 class="d-inline"
               >
@@ -102,27 +102,7 @@
                 </button>
               </div>
             </div>
-            <div
-              v-if="attributes.Stockages && attributes.Stockages.length >= 1"
-              class="col-sm-12"
-            >
-              <hr />
-              <h5>Stockages:</h5>
-              <div
-                v-for="(item, index) in attributes.Stockages"
-                :key="index"
-                class="d-inline"
-              >
-                <button
-                  :id="item.stockage"
-                  class="btn btn-outline-secondary m-1"
-                  name="stockage"
-                  @click="chooseStockage(item.stockage)"
-                >
-                  {{ item.stockage }} GB
-                </button>
-              </div>
-            </div>
+
             <div class="col-sm-12">
               <hr />
 
@@ -259,7 +239,6 @@ export default {
       .then(async (response) => {
         this.product = response.data
         this.src = this.product.pics[0].src
-        this.attributes = this.product.attributes[0]
         await productService
           .getallLike(this.product._id)
           .then(async (response) => {

@@ -92,7 +92,7 @@
                 small
                 color="error"
                 @click="supAll(command._id)"
-                >Annuler tout</span
+                >Supprimer tout</span
               >
             </div>
             <v-list-item-group
@@ -112,7 +112,9 @@
                   <v-list-item-subtitle v-if="item.rendu" class="red"
                     >Rendu</v-list-item-subtitle
                   >
-                  <v-list-item-subtitle v-if="item.wtgb" class="red"
+                  <v-list-item-subtitle
+                    v-if="item.wtgb && !item.rendu"
+                    class="red"
                     >Retour en traitement</v-list-item-subtitle
                   >
                 </v-list-item-content>
