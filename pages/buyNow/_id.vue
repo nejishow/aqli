@@ -141,7 +141,9 @@ export default {
           src: element.src,
           name: element.name,
           quantity: element.quantity,
-          price: element.price
+          price: element.price,
+          garantit: element.garantit,
+          serial: element.serial
         })
       })
       this.finalcommand = {

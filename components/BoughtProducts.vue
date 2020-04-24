@@ -27,110 +27,163 @@
         <h4 class="font-italic">
           <u>Mes commandes en attentes</u>
         </h4>
-        <div v-for="(command, i) in bought" :key="i" class="mb-3 card">
-          <v-list v-if="command.received == false">
-            <div class="d-flex align-baseline justify-content-between">
-              <v-subheader
-                >Commande effectué le:
-                {{ new Date(command.createdAt).getDate() }}/{{
-                  new Date(command.createdAt).getMonth() + 1
-                }}/{{ new Date(command.createdAt).getFullYear() }}</v-subheader
-              >
-              <span
-                v-if="command.enabled"
-                small
-                color="error"
-                @click="cancelAll(command._id)"
-                >Annuler tout</span
-              >
-            </div>
-            <v-list-item-group
-              v-for="(item, index) in command.commands"
-              :key="index"
-              color="primary"
-            >
-              <v-list-item v-if="item.enabled">
-                <v-list-item-avatar>
-                  <v-img :src="item.src"></v-img>
-                </v-list-item-avatar>
-                <v-list-item-content>
-                  <v-list-item-title v-text="item.name"></v-list-item-title>
-                  <v-list-item-subtitle
-                    >Quantité: {{ item.quantity }}</v-list-item-subtitle
-                  >
-                  <v-list-item-subtitle v-if="!item.enabled"
-                    >Annulé</v-list-item-subtitle
-                  >
-                </v-list-item-content>
-                <v-btn
-                  v-if="item.enabled"
+        <div v-for="(command, i) in bought" :key="i" class="mb-3">
+          <v-card v-if="command.received == false">
+            <v-list>
+              <div class="d-flex align-baseline justify-content-between">
+                <v-subheader
+                  >Commande effectué le:
+                  {{ new Date(command.createdAt).getDate() }}/{{
+                    new Date(command.createdAt).getMonth() + 1
+                  }}/{{
+                    new Date(command.createdAt).getFullYear()
+                  }}</v-subheader
+                >
+                <button
+                  v-if="command.enabled"
+                  class="btn btn-danger m-2"
                   small
                   color="error"
-                  @click="cancel(item._id)"
-                  >annuler</v-btn
+                  @click="cancelAll(command._id)"
                 >
-              </v-list-item>
-            </v-list-item-group>
-          </v-list>
+                  Annuler tout
+                </button>
+              </div>
+              <v-list-item-group
+                v-for="(item, index) in command.commands"
+                :key="index"
+                color="primary"
+              >
+                <v-list-item v-if="item.enabled">
+                  <v-row>
+                    <v-col sm="2" md="2">
+                      <v-list-item-avatar tile>
+                        <v-img :src="item.src"></v-img>
+                      </v-list-item-avatar>
+                    </v-col>
+                    <v-col sm="10" md="10">
+                      <v-list-item-content>
+                        <v-list-item-title
+                          v-text="item.name"
+                        ></v-list-item-title>
+                        <v-list-item-subtitle
+                          >Quantité: {{ item.quantity }}</v-list-item-subtitle
+                        >
+                        <v-list-item-subtitle
+                          v-if="!item.enabled"
+                          class="text-danger"
+                          >Annulé</v-list-item-subtitle
+                        >
+                      </v-list-item-content>
+                      <v-list-item-content>
+                        <v-list-item-subtitle>Garantit</v-list-item-subtitle>
+                        <v-list-item-subtitle
+                          >{{ item.garantit }} jours</v-list-item-subtitle
+                        >
+                      </v-list-item-content>
+                    </v-col>
+                    <v-col sm="12" md="12">
+                      <v-btn
+                        v-if="item.enabled"
+                        small
+                        color="info"
+                        :to="{
+                          path: '/product/' + item.name,
+                          query: { id: item.idProduct }
+                        }"
+                        >voir le produit</v-btn
+                      >
+                      <v-btn
+                        v-if="item.enabled"
+                        small
+                        color="error"
+                        @click="cancel(item._id)"
+                        >annuler</v-btn
+                      >
+                    </v-col>
+                  </v-row>
+                </v-list-item>
+              </v-list-item-group>
+            </v-list>
+          </v-card>
         </div>
       </div>
       <div class="col-sm-12 col-md-8 pt-4">
         <h4 class="font-italic">
           <u>Mes achats effectué</u>
         </h4>
-        <div v-for="(command, i) in bought" :key="i" class="mb-3 card">
-          <v-list v-if="command.received == true">
-            <div class="d-flex align-baseline justify-content-between">
-              <v-subheader
-                >Commande effectué le:
-                {{ new Date(command.createdAt).getDate() }}/{{
-                  new Date(command.createdAt).getMonth() + 1
-                }}/{{ new Date(command.createdAt).getFullYear() }}</v-subheader
-              >
-              <span
-                v-if="command.enabled"
-                small
-                color="error"
-                @click="supAll(command._id)"
-                >Supprimer tout</span
-              >
-            </div>
-            <v-list-item-group
-              v-for="(item, index) in command.commands"
-              :key="index"
-              color="primary"
-            >
-              <v-list-item v-if="item.enabled">
-                <v-list-item-avatar>
-                  <v-img :src="item.src"></v-img>
-                </v-list-item-avatar>
-                <v-list-item-content>
-                  <v-list-item-title v-text="item.name"></v-list-item-title>
-                  <v-list-item-subtitle
-                    >Quantité: {{ item.quantity }}</v-list-item-subtitle
-                  >
-                  <v-list-item-subtitle v-if="item.rendu" class="red"
-                    >Rendu</v-list-item-subtitle
-                  >
-                  <v-list-item-subtitle
-                    v-if="item.wtgb && !item.rendu"
-                    class="red"
-                    >Retour en traitement</v-list-item-subtitle
-                  >
-                </v-list-item-content>
-                <v-btn
-                  v-if="item.enabled"
+        <div v-for="(command, i) in bought" :key="i">
+          <v-card v-if="command.received == true">
+            <v-list>
+              <div class="d-flex align-baseline justify-content-between">
+                <v-subheader
+                  >Commande effectué le:
+                  {{ new Date(command.createdAt).getDate() }}/{{
+                    new Date(command.createdAt).getMonth() + 1
+                  }}/{{
+                    new Date(command.createdAt).getFullYear()
+                  }}</v-subheader
+                >
+                <button
+                  v-if="command.enabled"
+                  class="btn btn-danger m-2"
                   small
-                  color="orange"
-                  @click="sup(item._id)"
-                  >Supprimer</v-btn
+                  color="error"
+                  @click="supAll(command._id)"
                 >
-                <v-btn v-if="item.enabled" small @click="getBack(item._id)"
-                  >Rendre</v-btn
-                >
-              </v-list-item>
-            </v-list-item-group>
-          </v-list>
+                  Supprimer tout
+                </button>
+              </div>
+              <v-list-item-group
+                v-for="(item, index) in command.commands"
+                :key="index"
+                color="primary"
+              >
+                <v-list-item v-if="item.enabled">
+                  <v-row>
+                    <v-col sm="2">
+                      <v-list-item-avatar tile>
+                        <v-img :src="item.src"></v-img>
+                      </v-list-item-avatar>
+                    </v-col>
+                    <v-col sm="10">
+                      <v-list-item-content>
+                        <v-list-item-title
+                          v-text="item.name"
+                        ></v-list-item-title>
+                        <v-list-item-subtitle
+                          >Quantité: {{ item.quantity }}</v-list-item-subtitle
+                        >
+                        <v-list-item-subtitle v-if="item.rendu" class="red"
+                          >Rendu</v-list-item-subtitle
+                        >
+                        <v-list-item-subtitle
+                          v-if="item.wtgb && !item.rendu"
+                          class="red"
+                          >Retour en traitement</v-list-item-subtitle
+                        >
+                      </v-list-item-content>
+                    </v-col>
+                    <v-col sm="12">
+                      <v-btn
+                        v-if="item.enabled"
+                        small
+                        color="orange"
+                        @click="sup(item._id)"
+                        >Supprimer</v-btn
+                      >
+                      <v-btn
+                        v-if="item.enabled"
+                        small
+                        @click="getBack(item._id)"
+                        >Rendre</v-btn
+                      >
+                    </v-col>
+                  </v-row>
+                </v-list-item>
+              </v-list-item-group>
+            </v-list>
+          </v-card>
         </div>
       </div>
     </div>

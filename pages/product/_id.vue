@@ -1,5 +1,18 @@
 <template>
   <div>
+    <div>
+      <v-alert
+        :value="alert"
+        color="yellow"
+        dark
+        border="top"
+        style="position:fixed; z-index:999; margin: 0 auto"
+        icon="mdi-home"
+        transition="scale-transition"
+      >
+        <v-subheader class="text-dark h2">{{ alertMessage }}</v-subheader>
+      </v-alert>
+    </div>
     <div v-if="isCharging" class="row">
       <div class="col-sm-12 text-center">
         <v-progress-circular
@@ -61,7 +74,7 @@
             </div>
 
             <div
-              v-if="attributes.Couleurs && attributes.Couleurs.length >= 1"
+              v-if="product.Couleurs && product.Couleurs.length >= 1"
               class="col-sm-12"
             >
               <hr />
@@ -82,7 +95,7 @@
               </div>
             </div>
             <div
-              v-if="attributes.Tailles && attributes.Tailles.length >= 1"
+              v-if="product.Tailles && product.Tailles.length >= 1"
               class="col-sm-12"
             >
               <hr />
@@ -211,19 +224,13 @@ export default {
   data() {
     return {
       isCharging: true,
-      dismissSecs: 4,
-      dismissCountDown: 0,
-      message: '',
+      alertMessage: '',
+      alert: false,
       achat: [],
       liked: false,
       countPeople: '',
       src: '',
       quantité: 1,
-      attributes: {
-        Couleurs: [],
-        Stockages: [],
-        Taille: []
-      },
       product: [],
       slide: 0,
       sliding: null
@@ -252,22 +259,16 @@ export default {
           serial: this.product.serial,
           color: null,
           size: null,
-          stockage: null,
+          garantit: this.product.garantit,
           quantity: this.quantité,
           price: this.product.price,
           enabled: true
         }
-        if (this.attributes.Couleurs && this.attributes.Couleurs.length >= 1) {
-          await this.chooseColor(this.attributes.Couleurs[0].color)
+        if (this.product.Couleurs && this.product.Couleurs.length >= 1) {
+          await this.chooseColor(this.product.Couleurs[0].color)
         }
-        if (this.attributes.Tailles && this.attributes.Tailles.length >= 1) {
-          await this.chooseTaille(this.attributes.Taille[0].size)
-        }
-        if (
-          this.attributes.Stockages &&
-          this.attributes.Stockages.length >= 1
-        ) {
-          await this.chooseStockage(this.attributes.Stockages[0].stockage)
+        if (this.product.Tailles && this.product.Tailles.length >= 1) {
+          await this.chooseTaille(this.product.Taille[0].size)
         }
         this.isCharging = false
       })
@@ -347,7 +348,22 @@ export default {
       }
     },
     async addPanier() {
-      await this.$store.dispatch('panier/addPanier', this.achat)
+      await this.$store
+        .dispatch('panier/addPanier', this.achat)
+        .then(() => {
+          this.alertMessage = 'Produit sauvegardé dans le panier'
+          this.alert = true
+          setTimeout(() => {
+            this.alert = false
+          }, 3000)
+        })
+        .catch(() => {
+          this.alertMessage = 'Erreur survenue, produit non sauvegardé'
+          this.alert = true
+          setTimeout(() => {
+            this.alert = false
+          }, 3000)
+        })
     },
     async buyNow() {
       if (this.id !== null) {
