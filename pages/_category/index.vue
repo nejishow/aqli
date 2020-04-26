@@ -1,24 +1,27 @@
 <template>
   <div class="row">
-    <div class="col-sm-12 col-md-3 navbar-expand-lg">
-      <v-list :shaped="shaped" class=" border-right">
-        <v-subheader
-          ><u>{{ this.$route.params.category }}</u></v-subheader
-        >
-        <v-list-item-group color="primary">
-          <v-list-item
-            v-for="(sub, index) in subCategoryMenu"
-            :key="index"
-            :name="sub._id"
-            :inactive="inactive"
-            @click="getProductTypebyId(sub._id, sub.name)"
-          >
-            <v-list-item-content>
-              <v-list-item-title v-text="sub.name" />
-            </v-list-item-content>
-          </v-list-item>
-        </v-list-item-group>
-      </v-list>
+    <div class="col-sm-12 col-md-3">
+      <v-card class="border-danger">
+        <v-list :shaped="shaped" color="#82B1FF">
+          <v-list-group value="true" :expand="!expand">
+            <template v-slot:activator>
+              <v-subheader>{{ title }}</v-subheader>
+            </template>
+
+            <v-list-item
+              v-for="(sub, index) in subCategoryMenu"
+              :key="index"
+              :name="sub._id"
+              :inactive="inactive"
+              @click="getProductTypebyId(sub._id, sub.name)"
+            >
+              <v-list-item-content>
+                <v-list-item-title class="text-light" small v-text="sub.name" />
+              </v-list-item-content>
+            </v-list-item>
+          </v-list-group>
+        </v-list>
+      </v-card>
     </div>
     <div class="col-sm-12 col-md-9">
       <div class="row">
@@ -54,11 +57,8 @@
                 </v-avatar>
               </v-col>
 
-              <v-col sm="6">
-                <v-card-title
-                  class="headline"
-                  v-text="item.name"
-                ></v-card-title>
+              <v-col sm="6" class="pl-5">
+                <span class="h6 font-weight-bold">{{ item.name }}</span>
               </v-col>
             </v-row>
           </v-card>
@@ -79,10 +79,19 @@ export default {
         store.state.categoryMenu.subCategoryMenu[0]._id
       )
     } catch (e) {
-      error({
-        statusCode: 503,
-        message: 'Unable to fetch at this time, please retry later'
-      })
+      if (e.response.status === 500) {
+        error({
+          statusCode: 500,
+          message:
+            "OOps une erreur est survenue veillez recommencer depuis l'acceuil"
+        })
+      }
+      if (e.response.status === 404) {
+        error({
+          statusCode: 404,
+          message: "OOps Cette page n'existe pas"
+        })
+      }
     }
   },
   data() {
@@ -94,7 +103,9 @@ export default {
       shaped: true,
       inactive: false,
       product: 0,
-      keywords: ''
+      keywords: '',
+      title: this.$route.params.category,
+      expand: true
     }
   },
   computed: mapState({

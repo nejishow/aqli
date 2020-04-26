@@ -20,7 +20,7 @@ export default {
     return menuClient.get('/allProductType')
   },
   getAllProduct() {
-    return menuClient.get('/allProduct')
+    return menuClient.get('/allProductAdmin')
   },
   getProductType(id) {
     return menuClient.get('/productType/' + id)

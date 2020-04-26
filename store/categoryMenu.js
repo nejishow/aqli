@@ -36,17 +36,47 @@ export const mutations = {
 export const actions = {
   fetchCategoryMenu({ commit }) {
     return MenuService.getCategory().then(async (response) => {
-      await commit('SET_CategoryMenu', response.data)
+      const categoryMenu = response.data
+      await categoryMenu.sort((a, b) => {
+        if (a.name > b.name) {
+          return 1
+        }
+        if (b.name > a.name) {
+          return -1
+        }
+        return 0
+      })
+      await commit('SET_CategoryMenu', categoryMenu)
     })
   },
   fetchSubCategoryMenu({ commit }, id) {
-    return MenuService.getSubCategory(id).then((response) => {
-      commit('SET_SubCategoryMenu', response.data)
+    return MenuService.getSubCategory(id).then(async (response) => {
+      const subCat = response.data
+      await subCat.sort((a, b) => {
+        if (a.name > b.name) {
+          return 1
+        }
+        if (b.name > a.name) {
+          return -1
+        }
+        return 0
+      })
+      commit('SET_SubCategoryMenu', subCat)
     })
   },
   fetchProductType({ commit }, id) {
-    return MenuService.getProductType(id).then((response) => {
-      commit('SET_ProductType', response.data)
+    return MenuService.getProductType(id).then(async (response) => {
+      const prod = response.data
+      await prod.sort((a, b) => {
+        if (a.name > b.name) {
+          return 1
+        }
+        if (b.name > a.name) {
+          return -1
+        }
+        return 0
+      })
+      commit('SET_ProductType', prod)
     })
   },
   fetchProducts({ commit }, id) {

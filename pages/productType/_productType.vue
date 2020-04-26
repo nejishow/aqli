@@ -1,84 +1,105 @@
 <template>
   <!-- Stack the columns on mobile by making one full-width and the other half-width -->
-  <div class="row">
-    <div class=" col-sm-12 col-md-3  sortPc">
-      <h3>{{ this.$route.params.productType }}</h3>
+  <div>
+    <div v-if="isCharging" class="row">
+      <div class="col-sm-12 text-center">
+        <v-progress-circular
+          :size="70"
+          :width="7"
+          color="purple"
+          indeterminate
+        ></v-progress-circular>
+      </div>
     </div>
+    <div v-show="!isCharging" class="row">
+      <div class=" col-sm-12 col-md-3">
+        <h3>{{ this.$route.params.productType }}</h3>
+      </div>
 
-    <div class="col-sm-12 col-md-9">
-      <div class="row">
-        <div
-          v-for="(item, index) in products"
-          :key="index"
-          class="col-sm-12 col-md-5 mb-3"
-        >
-          <v-card
-            :shaped="shaped"
-            :to="{
-              path: '/product/' + item.name,
-              query: { id: item._id }
-            }"
+      <div class="col-sm-12 col-md-9">
+        <v-row>
+          <v-col
+            v-for="(item, index) in products"
+            :key="index"
+            sm="12"
+            md="4"
+            class="border-bottom littleScreen"
           >
-            <v-row dense>
-              <v-col sm="6">
-                <v-avatar class="ma-3" size="125" tile>
-                  <v-img :src="item.pics[0].src" :lazy-src="item.pics[0].src">
-                    <template v-slot:placeholder>
-                      <v-row
-                        class="fill-height ma-0"
-                        align="center"
-                        justify="center"
-                      >
-                        <v-progress-circular
-                          indeterminate
-                          color="grey lighten-5"
-                        ></v-progress-circular>
-                      </v-row>
-                    </template>
-                  </v-img>
-                </v-avatar>
-              </v-col>
-              <v-col sm="6">
-                <v-card-subtitle>{{ item.name }}</v-card-subtitle>
-                <v-card-text class="h6 text-left"
-                  >{{ item.price }} fdj</v-card-text
-                >
-              </v-col>
-            </v-row>
-          </v-card>
-        </div>
+            <router-link
+              :to="{
+                path: '/product/' + item.name,
+                query: { id: item._id }
+              }"
+            >
+              <v-avatar size="200" tile>
+                <v-img :src="item.pics[0].src" :lazy-src="item.pics[0].src">
+                  <template v-slot:placeholder>
+                    <v-row
+                      class="fill-height ma-0"
+                      align="center"
+                      justify="center"
+                    >
+                      <v-progress-circular
+                        indeterminate
+                        color="grey lighten-5"
+                      ></v-progress-circular>
+                    </v-row>
+                  </template>
+                </v-img>
+              </v-avatar>
+            </router-link>
+
+            <div class="text-left d-flex flex-column">
+              <span class="h6 font-weight-light">{{ item.name }}</span>
+              <div class="text-center d-flex">
+                <v-rating v-model="item.rating" readonly dense small></v-rating>
+                ({{ item.ratings.length }})
+              </div>
+              <span class=" font-weight-bold text-left"
+                >Prix: {{ item.price }} Fdj</span
+              >
+            </div>
+          </v-col>
+        </v-row>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import { mapState } from 'vuex'
+import menuService from '~/services/menuService.js'
 export default {
-  async fetch({ store, error, query }) {
-    try {
-      await store.dispatch('categoryMenu/fetchProducts', query.id)
-    } catch (e) {
-      error({
-        statusCode: 503,
-        message: 'Unable to fetch at this time, please retry later'
-      })
-    }
-  },
   data() {
     return {
       showDialog: false,
       shaped: true,
-      keywords: ''
+      keywords: '',
+      products: [],
+      isCharging: true
     }
   },
-  computed: mapState({
-    products: (state) => state.categoryMenu.products
-  }),
-  created() {
-    this.products.forEach((element) => {
-      this.keywords += ', ' + element.name
-    })
+  async mounted() {
+    try {
+      menuService.getProducts(this.$route.query.id).then((response) => {
+        this.products = response.data
+      })
+      this.isCharging = false
+      await this.products.forEach((element) => {
+        this.keywords += ', ' + element.name
+      })
+    } catch (e) {
+      if (e.response.status === 500) {
+        return this.$nuxt.error({
+          statusCode: 500,
+          message:
+            "OOps une erreur est survenue veillez recommencer depuis l'acceuil"
+        })
+      }
+      return this.$nuxt.error({
+        statusCode: 404,
+        message: "OOps Cette page n'existe pas"
+      })
+    }
   },
   head() {
     return {
@@ -115,20 +136,16 @@ img {
   width: 180px;
   max-height: 180px;
 }
-@media (max-width: 700px) {
-  .sortPc {
-    display: none;
-  }
-  .sortMobile {
-    display: inherit;
+@media (max-width: 770px) {
+  .littleScreen {
+    display: flex;
+    flex-direction: row;
   }
 }
-@media (min-width: 700px) {
-  .sortPc {
-    display: inherit;
-  }
-  .sortMobile {
-    display: none;
+@media (min-width: 771px) {
+  .littleScreen {
+    display: flex;
+    flex-direction: column;
   }
 }
 </style>

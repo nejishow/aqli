@@ -128,7 +128,8 @@ export default {
       (v) => !!v || "L'addresse est nescessaire pour les livraisons"
     ],
     numberRules: [
-      (v) => !!v || 'Le numero est nescessaire pour les livraisons'
+      (v) => !!v || 'Le numero est nescessaire pour les livraisons',
+      (v) => /^[0-9]+$/.test(v) || 'chiffres'
     ],
     passwordRules: [(v) => !!v || 'Le mot de passe est obligatoire'],
     emailRules: [

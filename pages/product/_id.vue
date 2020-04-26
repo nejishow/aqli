@@ -62,12 +62,21 @@
                 <h2 class="font-italic font-weight-bolder">
                   {{ product.name }}
                 </h2>
-                <span v-if="product.inStock" class="large badge badge-success"
+                <span v-if="product.inStock" class="small badge text-success "
                   >disponible</span
                 >
-                <span v-if="!product.inStock" class="badge badge-danger"
+                <span v-if="!product.inStock" class="badge small text-danger"
                   >rupture de stock</span
                 >
+              </div>
+              <div class="text-center d-flex">
+                <v-rating
+                  v-model="product.rating"
+                  readonly
+                  dense
+                  small
+                ></v-rating>
+                ({{ ratingPeople }})
               </div>
               <hr />
               <h6 class="text-danger">{{ product.price }} FDj</h6>
@@ -198,7 +207,7 @@
           Garantit:
           <span class="font-weight-bold">{{ product.garantit }}</span>
         </div>
-        <div class="col-sm-12 col-md-8 border-top mt-3 pt-3">
+        <!-- <div class="col-sm-12 col-md-8 border-top mt-3 pt-3">
           <h5>Avis sur le produit</h5>
           <div class="row">
             <div
@@ -210,7 +219,7 @@
               : {{ item[Object.keys(item)[0]] }}
             </div>
           </div>
-        </div>
+        </div> -->
       </div>
     </div>
   </div>
@@ -218,7 +227,7 @@
 
 <script>
 import $ from 'jquery'
-import { mapState, mapActions } from 'vuex'
+import { mapActions } from 'vuex'
 import productService from '~/services/productService.js'
 export default {
   data() {
@@ -229,6 +238,7 @@ export default {
       achat: [],
       liked: false,
       countPeople: '',
+      ratingPeople: 0,
       src: '',
       quantité: 1,
       product: [],
@@ -236,15 +246,25 @@ export default {
       sliding: null
     }
   },
-  computed: mapState({
-    id: (state) => state.user.id
-  }),
+  computed: {
+    length() {
+      let i = 0
+      this.product.ratings.forEach((element) => {
+        i++
+      })
+      return i
+    },
+    id() {
+      return this.$store.state.user.id
+    }
+  },
   mounted() {
     // retrieve this product whole details
     productService
       .getProduct(this.$route.query.id)
       .then(async (response) => {
         this.product = response.data
+        this.ratingPeople = this.product.ratings.length
         this.src = this.product.pics[0].src
         await productService
           .getallLike(this.product._id)
@@ -272,7 +292,19 @@ export default {
         }
         this.isCharging = false
       })
-      .catch(() => {})
+      .catch((e) => {
+        if (e.response.status === 500) {
+          return this.$nuxt.error({
+            statusCode: 500,
+            message:
+              "OOps une erreur est survenue veillez recommencer depuis l'acceuil"
+          })
+        }
+        return this.$nuxt.error({
+          statusCode: 404,
+          message: "OOps Cette page n'existe pas"
+        })
+      })
   },
   methods: {
     ...mapActions({ setPanier: 'setPanier' }),

@@ -88,12 +88,8 @@ export default {
         })
       })
 
-      const product = menuService.getAllProduct().then((response) => {
-        return response.data.map((event) => {
-          return '/product/' + event.name + '?id=' + event._id
-        })
-      })
-      return Promise.all([cat, productType, product]).then((values) => {
+      const url = ['login/', 'signUp/']
+      return Promise.all([cat, productType, url]).then((values) => {
         return values.join().split(',')
       })
     }
