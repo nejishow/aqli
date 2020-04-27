@@ -39,15 +39,25 @@
         @click="goHome"
       ></v-img>
       <v-spacer />
-      <v-tabs right class="bigScreen">
-        <v-tabs-slider color="#4A148C"></v-tabs-slider>
-
-        <v-tab router exact to="/" color="#AB47BC">Acceuil</v-tab>
-        <v-tab v-if="getId" router exact :to="'/profil/' + getId">Profil</v-tab>
-        <v-tab v-if="getId" router exact :to="'/panier/' + getId">Panier</v-tab>
-        <v-tab v-if="!getId" to="/login" router exact>Connection</v-tab>
-        <v-tab v-if="!getId" to="/signUp" router exact>Inscription</v-tab>
-        <v-tab v-if="getId" router exact @click="logout">Deconnection</v-tab>
+      <v-tabs right class="bigScreen" hide-slider>
+        <v-tab class="border" router exact to="/" color="#AB47BC"
+          >Acceuil</v-tab
+        >
+        <v-tab v-if="getId" class="border" router exact :to="'/profil/' + getId"
+          >Profil</v-tab
+        >
+        <v-tab v-if="getId" class="border" router exact :to="'/panier/' + getId"
+          >Panier</v-tab
+        >
+        <v-tab v-if="!getId" class="border" to="/login" router exact
+          >Connection</v-tab
+        >
+        <v-tab v-if="!getId" class="border" to="/signUp" router exact
+          >Inscription</v-tab
+        >
+        <v-tab v-if="getId" class="border" router exact @click="logout"
+          >Deconnection</v-tab
+        >
       </v-tabs>
       <template v-slot:extension class="border">
         <div class="row d-flex justify-content-center">
@@ -75,7 +85,14 @@
     </v-app-bar>
     <v-content>
       <v-container>
-        <nuxt />
+        <v-row v-show="deconnection" class="text-center">
+          <v-col>
+            <v-card>
+              <v-card-title>Deconnection en cours ....</v-card-title>
+            </v-card>
+          </v-col>
+        </v-row>
+        <nuxt v-show="!deconnection" />
       </v-container>
     </v-content>
     <v-navigation-drawer
@@ -129,6 +146,7 @@ import { mapGetters } from 'vuex'
 export default {
   data() {
     return {
+      deconnection: false,
       drawer: false,
       fixed: false,
       clipped: true,
@@ -177,8 +195,10 @@ export default {
     },
     logout() {
       if (localStorage.getItem('token') !== null) {
+        this.deconnection = true
         this.$store.dispatch('user/logout').then(async () => {
           await this.$router.go()
+          this.deconnection = false
         })
       }
     }

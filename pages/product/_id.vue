@@ -71,7 +71,16 @@
               </div>
               <div class="text-center d-flex">
                 <v-rating
-                  v-model="product.rating"
+                  v-show="id !== null"
+                  :value="rating"
+                  dense
+                  hover
+                  small
+                  @input="rated($event)"
+                ></v-rating>
+                <v-rating
+                  v-show="id === null"
+                  :value="rating"
                   readonly
                   dense
                   small
@@ -205,7 +214,7 @@
             </div>
           </div>
           Garantit:
-          <span class="font-weight-bold">{{ product.garantit }}</span>
+          <span class="font-weight-bold">{{ product.garantit }} jours</span>
         </div>
         <!-- <div class="col-sm-12 col-md-8 border-top mt-3 pt-3">
           <h5>Avis sur le produit</h5>
@@ -239,6 +248,7 @@ export default {
       liked: false,
       countPeople: '',
       ratingPeople: 0,
+      rating: 0,
       src: '',
       quantité: 1,
       product: [],
@@ -247,17 +257,11 @@ export default {
     }
   },
   computed: {
-    length() {
-      let i = 0
-      this.product.ratings.forEach((element) => {
-        i++
-      })
-      return i
-    },
     id() {
       return this.$store.state.user.id
     }
   },
+  watch: {},
   mounted() {
     // retrieve this product whole details
     productService
@@ -265,6 +269,7 @@ export default {
       .then(async (response) => {
         this.product = response.data
         this.ratingPeople = this.product.ratings.length
+        this.rating = this.product.rating
         this.src = this.product.pics[0].src
         await productService
           .getallLike(this.product._id)
@@ -317,6 +322,15 @@ export default {
           })
           .catch(() => {})
       }
+    },
+    rated(event) {
+      productService.rateProduct(event, this.product._id).then(() => {
+        productService.getProduct(this.$route.query.id).then((response) => {
+          const res = response.data
+          this.ratingPeople = res.ratings.length
+          this.rating = res.rating
+        })
+      })
     },
     like(product) {
       productService

@@ -2,9 +2,11 @@
   <div>
     <div class="row">
       <div class="col-sm-12 col-md-3">
-        <v-list shaped class=" border-right border-dark">
-          <v-subheader><u>Mon profil</u></v-subheader>
-          <v-list-item-group>
+        <v-list shaped>
+          <v-list-group value="true" :expand="!expand">
+            <template v-slot:activator>
+              <v-subheader><u>Mon profil</u></v-subheader>
+            </template>
             <v-list-item @click="pro">
               <v-list-item-content>
                 <v-list-item-title>Mes informations</v-list-item-title>
@@ -20,7 +22,7 @@
                 <v-list-item-title>Mes achats</v-list-item-title>
               </v-list-item-content>
             </v-list-item>
-          </v-list-item-group>
+          </v-list-group>
         </v-list>
       </div>
       <div class="col-sm-12 col-md-9">
@@ -53,7 +55,8 @@ export default {
       profil: true,
       bought: false,
       wishList: false,
-      panier: false
+      panier: false,
+      expand: true
     }
   },
   middleware: 'auth',

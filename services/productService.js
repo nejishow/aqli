@@ -52,5 +52,10 @@ export default {
   },
   sup(id) {
     return productClient.post('/supItem/' + id)
+  },
+  rateProduct(rating, id) {
+    return productClient.post('/rateProduct/' + id, {
+      params: rating
+    })
   }
 }
