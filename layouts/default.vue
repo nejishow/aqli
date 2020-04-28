@@ -135,8 +135,121 @@
         </v-list-item>
       </v-list>
     </v-navigation-drawer>
-    <v-footer>
-      <span>&copy; {{ new Date().getFullYear() }}</span>
+    <v-footer color="#E3F2FD">
+      <div class="row bigScreen">
+        <div class="col-sm-12 col-md-3">
+          <span class="h6">Shopping</span>
+
+          <v-list dense color="#E3F2FD">
+            <v-list-item
+              v-for="(item, i) in getCategoryMenu"
+              :key="i"
+              :to="{
+                path: '/' + item.name,
+                query: { id: item._id }
+              }"
+              router
+              exact
+            >
+              <v-list-item-content>
+                <span class="caption font-weight-light"> {{ item.name }}</span>
+              </v-list-item-content>
+            </v-list-item>
+          </v-list>
+        </div>
+        <div class="col-sm-12 col-md-3">
+          <span class="h6">Plus d'information</span>
+          <v-list dense color="#E3F2FD">
+            <v-list-item>
+              <v-list-item-content>
+                <span class="caption font-weight-light">AQLI</span>
+              </v-list-item-content>
+            </v-list-item>
+            <v-list-item>
+              <v-list-item-content>
+                <span class="caption font-weight-light"
+                  >Conditions d'utilisation</span
+                >
+              </v-list-item-content>
+            </v-list-item>
+            <v-list-item>
+              <v-list-item-content>
+                <span class="caption font-weight-light">A propos de nous</span>
+              </v-list-item-content>
+            </v-list-item>
+          </v-list>
+        </div>
+        <div class="col-sm-12 col-md-3">
+          <span class="h6">Reseaux sociaux</span>
+        </div>
+        <div class="col-sm-12 col-md-3">
+          <v-img
+            class="mx-2"
+            :src="require('~/assets/logo.png')"
+            max-height="100"
+            max-width="200"
+            contain
+            alt="Aqli-logo"
+            @click="goHome"
+          ></v-img>
+        </div>
+        <hr />
+        <div class="col-sm-12">
+          <span
+            >AQLI&copy; {{ new Date().getFullYear() }}, imaginé, designé et crée
+            par AQLI</span
+          >
+        </div>
+      </div>
+      <div class="row littleScreen">
+        <div class="col-sm-12 col-md-3">
+          <span class="h6">Shopping</span>
+          <div
+            v-for="(item, i) in getCategoryMenu"
+            :key="i"
+            class="d-flex"
+            color="#E3F2FD"
+            :to="{
+              path: '/' + item.name,
+              query: { id: item._id }
+            }"
+            router
+            exact
+          >
+            <span>{{ item.name }}</span>
+          </div>
+        </div>
+        <div class="col-sm-12 col-md-3">
+          <span class="h6">Plus d'information</span>
+          <div class="d-flex justify-content-between">
+            <span class="caption font-weight-light">AQLI</span>
+            <span class="caption font-weight-light"
+              >Conditions d'utilisation</span
+            >
+            <span class="caption font-weight-light">A propos de nous</span>
+          </div>
+        </div>
+        <div class="col-sm-12 col-md-3">
+          <span class="h6">Reseaux sociaux</span>
+        </div>
+        <div class="col-sm-12 col-md-3 d-flex justify-content-center">
+          <v-img
+            class="mx-2"
+            :src="require('~/assets/logo.png')"
+            max-height="100"
+            max-width="200"
+            contain
+            alt="Aqli-logo"
+            @click="goHome"
+          ></v-img>
+        </div>
+        <div class="col-sm-12">
+          <span
+            >AQLI&copy; {{ new Date().getFullYear() }}, imaginé, designé et crée
+            par AQLI</span
+          >
+        </div>
+      </div>
     </v-footer>
   </v-app>
 </template>
