@@ -190,9 +190,6 @@
                     >mdi-heart-outline</v-icon
                   >
                 </div>
-                <span class="font-italic">
-                  <u>{{ countPeople }}</u> personne(s) aime(nt) ce produit
-                </span>
               </div>
             </div>
           </div>
@@ -207,10 +204,12 @@
             <div
               v-for="(item, index) in product.description"
               :key="index"
-              class="col-sm-6 col-md-3 mb-3"
+              class="col-sm-6 col-md-2 mb-3"
             >
-              <span class="font-weight-bolder">{{ Object.keys(item)[0] }}</span>
-              : {{ item[Object.keys(item)[0]] }}
+              <span class="font-weight-bold small">{{
+                Object.keys(item)[0]
+              }}</span>
+              : <span class="small">{{ item[Object.keys(item)[0]] }}</span>
             </div>
           </div>
           Garantit:

@@ -1,0 +1,3 @@
+pour les photo des sous categories: height x 1.7857 = width
+pour les photo des product type height x 1.3350 = width
+pour les photos des produits height = widht et superieur à 500px

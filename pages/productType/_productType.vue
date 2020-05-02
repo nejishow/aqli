@@ -80,13 +80,13 @@ export default {
   },
   async mounted() {
     try {
-      menuService.getProducts(this.$route.query.id).then((response) => {
+      await menuService.getProducts(this.$route.query.id).then((response) => {
         this.products = response.data
       })
-      this.isCharging = false
       await this.products.forEach((element) => {
         this.keywords += ', ' + element.name
       })
+      this.isCharging = false
     } catch (e) {
       if (e.response.status === 500) {
         return this.$nuxt.error({
