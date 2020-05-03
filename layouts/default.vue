@@ -319,7 +319,7 @@ export default {
       await this.allProducts.forEach((element) => {
         searchWords.forEach((word) => {
           if (
-            element.keywords.contains(word) &&
+            element.keywords.includes(word) &&
             !this.searchResults.includes(element)
           ) {
             this.searchResults.push(element)

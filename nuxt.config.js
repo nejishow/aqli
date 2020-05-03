@@ -53,7 +53,7 @@ export default {
   /*
    ** Plugins to load before mounting the App
    */
-  plugins: [],
+  plugins: [{ src: '~plugins/vue-carousel', ssr: false }],
   /*
    ** Nuxt.js dev-modules
    */
@@ -70,7 +70,6 @@ export default {
     '@nuxtjs/axios',
     '@nuxtjs/pwa',
     '@nuxtjs/sitemap',
-    'nuxt-buefy',
     '@nuxtjs/robots',
     [
       '@nuxtjs/google-adsense',

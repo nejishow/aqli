@@ -2,55 +2,41 @@
   <div class="row">
     <div class="col-sm-12">
       <span class="h6">Les produits du meme genre</span>
-      <!-- <carousel :items="items" :autoplay="true">
-        <div v-for="(item, index) in products" :key="index" class="text-left">
-          <router-link
-            :to="{
-              path: '/product/' + item.name,
-              query: { id: item._id }
-            }"
-          >
-            <v-avatar size="150" tile>
-              <v-img :src="item.pics[0].src" :alt="item.name"> </v-img>
-            </v-avatar>
+      <no-ssr>
+        <!-- important to add no-ssr-->
 
-            <v-card-subtitle class=" font-weight-bold h6"
-              >{{ item.price }} fDJ</v-card-subtitle
-            >
-          </router-link>
-        </div>
-      </carousel> -->
-      <b-carousel :indicator-inside="false">
-        <b-carousel-item v-for="(item, index) in products" :key="index">
-          <router-link
-            :to="{
-              path: '/product/' + item.name,
-              query: { id: item._id }
-            }"
+        <Carousel :items="items" :autoplay="true" :center="true">
+          <Slide
+            v-for="(item, index) in products"
+            :key="index"
+            class="text-left"
           >
-            <v-avatar size="150" tile>
-              <v-img :src="item.pics[0].src" :alt="item.name"> </v-img>
-            </v-avatar>
-
-            <v-card-subtitle class=" font-weight-bold h6"
-              >{{ item.price }} fDJ</v-card-subtitle
+            <router-link
+              :to="{
+                path: '/product/' + item.name,
+                query: { id: item._id }
+              }"
             >
-          </router-link>
-        </b-carousel-item>
-        <template slot="indicators" slot-scope="props">
-          <span class="al image">
-            <img :src="props.pics[0].src" :title="props.name" />
-          </span>
-        </template>
-      </b-carousel>
+              <v-avatar size="150" tile>
+                <v-img :src="item.pics[0].src" :alt="item.name"> </v-img>
+              </v-avatar>
+
+              <v-card-subtitle class=" font-weight-bold h6"
+                >{{ item.price }} fDJ</v-card-subtitle
+              >
+            </router-link>
+          </Slide>
+        </Carousel>
+      </no-ssr>
+      <!-- important to add no-ssr-->
     </div>
   </div>
 </template>
 <script>
-// import carousel from 'vue-owl-carousel'
+import { Carousel, Slide } from 'vue-carousel'
 
 export default {
-  // components: { carousel },
+  components: { Carousel, Slide },
   props: {
     items: {
       type: Number,
@@ -81,7 +67,7 @@ export default {
   },
   computed: {
     products() {
-      const arr = this.$store.state.product.smartphones
+      const arr = this.$store.state.product.allProducts
       const prod = []
       arr.forEach((element) => {
         if (
@@ -97,7 +83,7 @@ export default {
           }
         }
       })
-      const fin = prod.slice(0, 10)
+      const fin = prod.slice(0, 6)
       return fin
     }
   }

@@ -70,27 +70,6 @@ export default {
     searchResults() {
       return this.$store.state.product.searchResults
     }
-  },
-  head() {
-    return {
-      title: this.$route.params.productType,
-      meta: [
-        {
-          hid: 'description',
-          name: 'description',
-          content:
-            'Decouvrer ici une multitude produits de la catégorie: ' +
-            this.$route.params.productType
-        },
-        {
-          name: 'keywords',
-          content:
-            this.$route.params.productType +
-            'aqli, ecommerce, djibouti, livraison, 24h' +
-            this.keywords
-        }
-      ]
-    }
   }
 }
 </script>

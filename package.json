@@ -21,8 +21,7 @@
     "bootstrap": "^4.4.1",
     "jquery": "^3.5.0",
     "nuxt": "^2.0.0",
-    "nuxt-buefy": "^0.3.28",
-    "vue-owl-carousel": "^2.0.3",
+    "vue-carousel": "^0.18.0",
     "vue-owl-carousel2": "^2.0.7"
   },
   "devDependencies": {

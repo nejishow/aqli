@@ -229,12 +229,15 @@
         </div> -->
       </div>
       <div class="row">
-        <div class="col-sm-12">
+        <div class="col-sm-8">
           <SameCategory
             :id="product._id"
             :id-product-type="product.idProductType"
             :items="3"
           ></SameCategory>
+        </div>
+        <div class="col-sm-4 big">
+          <adsbygoogle />
         </div>
       </div>
     </div>
