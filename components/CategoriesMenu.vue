@@ -36,18 +36,6 @@ export default {
   },
   computed: {
     ...mapGetters({ getCategoryMenu: 'getCategoryMenu' })
-  },
-  mounted() {
-    // axios
-    //   .get('/allCategory')
-    //   .then(async (response) => {
-    //     await response.data.forEach(element => {
-    //       this.categories.push(element)
-    //     })
-    //   })
-    //   .catch(function (error) {
-    //     console.log(error)
-    //   })
   }
 }
 </script>

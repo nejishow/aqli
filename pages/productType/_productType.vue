@@ -32,7 +32,11 @@
               }"
             >
               <v-avatar size="200" tile>
-                <v-img :src="item.pics[0].src" :lazy-src="item.pics[0].src">
+                <v-img
+                  :src="item.pics[0].src"
+                  :lazy-src="item.pics[0].src"
+                  :alt="item.name"
+                >
                   <template v-slot:placeholder>
                     <v-row
                       class="fill-height ma-0"

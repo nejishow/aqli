@@ -37,9 +37,6 @@ export default {
       otherError: 'Oopss un petit probleme est survenu'
     }
   },
-  created() {
-    // this.$router.go(-1)
-  },
   head() {
     const title = this.error.statusCode
     return {

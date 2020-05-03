@@ -40,7 +40,7 @@
             <v-row dense>
               <v-col sm="6">
                 <v-avatar class="ma-3" size="125" tile>
-                  <v-img :src="item.src" :lazy-src="item.src">
+                  <v-img :src="item.src" :lazy-src="item.src" :alt="item.name">
                     <template v-slot:placeholder>
                       <v-row
                         class="fill-height ma-0"

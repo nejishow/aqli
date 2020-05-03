@@ -1,55 +1,55 @@
 <template>
   <!-- Stack the columns on mobile by making one full-width and the other half-width -->
   <div class="row">
-    <div v-if="searchResults.length === 0">
+    <div v-if="searchResults.length === 0" class="col-sm-12">
       Pas de resultat
     </div>
-    <div v-else>
-      <div class="col-sm-12 col-md-9">
-        <v-row>
-          <v-col
-            v-for="(item, index) in searchResults"
-            :key="index"
-            sm="12"
-            md="4"
-            class="border-bottom littleScreen"
+    <div v-else class="col-sm-12 col-md-9">
+      <div class="row">
+        <div
+          v-for="(item, index) in searchResults"
+          :key="index"
+          class="col-sm-12 col-md-4 border-bottom littleScreen"
+        >
+          <router-link
+            :to="{
+              path: '/product/' + item.name,
+              query: { id: item._id }
+            }"
           >
-            <router-link
-              :to="{
-                path: '/product/' + item.name,
-                query: { id: item._id }
-              }"
-            >
-              <v-avatar size="200" tile>
-                <v-img :src="item.pics[0].src" :lazy-src="item.pics[0].src">
-                  <template v-slot:placeholder>
-                    <v-row
-                      class="fill-height ma-0"
-                      align="center"
-                      justify="center"
-                    >
-                      <v-progress-circular
-                        indeterminate
-                        color="grey lighten-5"
-                      ></v-progress-circular>
-                    </v-row>
-                  </template>
-                </v-img>
-              </v-avatar>
-            </router-link>
-
-            <div class="text-left d-flex flex-column">
-              <span class="h6 font-weight-light">{{ item.name }}</span>
-              <div class="text-center d-flex">
-                <v-rating v-model="item.rating" readonly dense small></v-rating>
-                ({{ item.ratings.length }})
-              </div>
-              <span class=" font-weight-bold text-left"
-                >Prix: {{ item.price }} Fdj</span
+            <v-avatar size="200" tile>
+              <v-img
+                :src="item.pics[0].src"
+                :lazy-src="item.pics[0].src"
+                :alt="item.name"
               >
+                <template v-slot:placeholder>
+                  <v-row
+                    class="fill-height ma-0"
+                    align="center"
+                    justify="center"
+                  >
+                    <v-progress-circular
+                      indeterminate
+                      color="grey lighten-5"
+                    ></v-progress-circular>
+                  </v-row>
+                </template>
+              </v-img>
+            </v-avatar>
+          </router-link>
+
+          <div class="text-left d-flex flex-column">
+            <span class="h6 font-weight-light">{{ item.name }}</span>
+            <div class="text-center d-flex">
+              <v-rating v-model="item.rating" readonly dense small></v-rating>
+              ({{ item.ratings.length }})
             </div>
-          </v-col>
-        </v-row>
+            <span class=" font-weight-bold text-left"
+              >Prix: {{ item.price }} Fdj</span
+            >
+          </div>
+        </div>
       </div>
     </div>
   </div>

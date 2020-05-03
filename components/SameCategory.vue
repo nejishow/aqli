@@ -2,56 +2,59 @@
   <div class="row">
     <div class="col-sm-12">
       <span class="h6">Les produits du meme genre</span>
-      <carousel :items="items">
-        <div v-for="(item, index) in products" :key="index">
+      <!-- <carousel :items="items" :autoplay="true">
+        <div v-for="(item, index) in products" :key="index" class="text-left">
           <router-link
             :to="{
               path: '/product/' + item.name,
               query: { id: item._id }
             }"
           >
-            <v-avatar size="100" tile>
-              <v-img :src="item.pics[0].src" :lazy-src="item.pics[0].src">
-                <template v-slot:placeholder>
-                  <v-row
-                    class="fill-height ma-0"
-                    align="center"
-                    justify="center"
-                  >
-                    <v-progress-circular
-                      indeterminate
-                      color="grey lighten-5"
-                    ></v-progress-circular>
-                  </v-row>
-                </template>
-              </v-img>
+            <v-avatar size="150" tile>
+              <v-img :src="item.pics[0].src" :alt="item.name"> </v-img>
             </v-avatar>
-          </router-link>
 
-          <div class="text-left d-flex flex-column">
-            <span class="h6 font-weight-light">{{ item.name }}</span>
-            <div class="text-center d-flex">
-              <v-rating v-model="item.rating" readonly dense small></v-rating>
-              ({{ item.ratings.length }})
-            </div>
-            <span class=" font-weight-bold text-left"
-              >Prix: {{ item.price }} Fdj</span
+            <v-card-subtitle class=" font-weight-bold h6"
+              >{{ item.price }} fDJ</v-card-subtitle
             >
-          </div>
+          </router-link>
         </div>
-      </carousel>
+      </carousel> -->
+      <b-carousel :indicator-inside="false">
+        <b-carousel-item v-for="(item, index) in products" :key="index">
+          <router-link
+            :to="{
+              path: '/product/' + item.name,
+              query: { id: item._id }
+            }"
+          >
+            <v-avatar size="150" tile>
+              <v-img :src="item.pics[0].src" :alt="item.name"> </v-img>
+            </v-avatar>
+
+            <v-card-subtitle class=" font-weight-bold h6"
+              >{{ item.price }} fDJ</v-card-subtitle
+            >
+          </router-link>
+        </b-carousel-item>
+        <template slot="indicators" slot-scope="props">
+          <span class="al image">
+            <img :src="props.pics[0].src" :title="props.name" />
+          </span>
+        </template>
+      </b-carousel>
     </div>
   </div>
 </template>
 <script>
-import carousel from 'vue-owl-carousel2'
+// import carousel from 'vue-owl-carousel'
 
 export default {
-  components: { carousel },
+  // components: { carousel },
   props: {
     items: {
       type: Number,
-      default: 3
+      default: 7
     },
     idProductType: {
       type: String,
@@ -65,7 +68,15 @@ export default {
   data() {
     return {
       loading: [],
-      transition: 'scale-transition'
+      transition: 'scale-transition',
+      arrow: true,
+      arrowHover: true,
+      drag: true,
+      gray: false,
+      opacity: false,
+      values: 1,
+      perList: 1,
+      repeat: false
     }
   },
   computed: {
@@ -86,7 +97,8 @@ export default {
           }
         }
       })
-      return prod
+      const fin = prod.slice(0, 10)
+      return fin
     }
   }
 }

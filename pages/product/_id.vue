@@ -33,7 +33,7 @@
               width="500px"
               height="500px"
               class="img-fluid"
-              alt
+              :alt="product.name"
             />
           </div>
           <div class="table">
@@ -47,7 +47,7 @@
                 class="img-fluid img-thumbnail"
                 width="100"
                 height="100"
-                alt
+                :alt="product.name"
                 @click="changeImage(pic.src)"
               />
             </div>
@@ -228,7 +228,7 @@
           </div>
         </div> -->
       </div>
-      <!-- <div class="row">
+      <div class="row">
         <div class="col-sm-12">
           <SameCategory
             :id="product._id"
@@ -236,7 +236,7 @@
             :items="3"
           ></SameCategory>
         </div>
-      </div> -->
+      </div>
     </div>
   </div>
 </template>
@@ -245,10 +245,10 @@
 import $ from 'jquery'
 import { mapActions } from 'vuex'
 import productService from '~/services/productService.js'
-// import SameCategory from '~/components/SameCategory.vue'
+import SameCategory from '~/components/SameCategory.vue'
 export default {
   components: {
-    // SameCategory
+    SameCategory
   },
   data() {
     return {

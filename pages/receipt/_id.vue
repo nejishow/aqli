@@ -16,7 +16,7 @@
             :to="`/product/${item.idProduct}`"
           >
             <v-list-item-avatar>
-              <v-img :src="item.src"></v-img>
+              <v-img :src="item.src" :alt="item.name"></v-img>
             </v-list-item-avatar>
             <v-list-item-content>
               <v-list-item-title v-text="item.name"></v-list-item-title>

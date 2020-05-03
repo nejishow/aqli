@@ -58,7 +58,7 @@
                   <v-row>
                     <v-col sm="2" md="2">
                       <v-list-item-avatar tile>
-                        <v-img :src="item.src"></v-img>
+                        <v-img :src="item.src" :alt="item.name"></v-img>
                       </v-list-item-avatar>
                     </v-col>
                     <v-col sm="10" md="10">
@@ -143,7 +143,7 @@
                   <v-row>
                     <v-col sm="2">
                       <v-list-item-avatar tile>
-                        <v-img :src="item.src"></v-img>
+                        <v-img :src="item.src" :alt="item.name"></v-img>
                       </v-list-item-avatar>
                     </v-col>
                     <v-col sm="10">

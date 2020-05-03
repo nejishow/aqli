@@ -70,7 +70,14 @@ export default {
     '@nuxtjs/axios',
     '@nuxtjs/pwa',
     '@nuxtjs/sitemap',
-    '@nuxtjs/robots'
+    'nuxt-buefy',
+    '@nuxtjs/robots',
+    [
+      '@nuxtjs/google-adsense',
+      {
+        id: 'ca-pub-5834499965170961'
+      }
+    ]
   ],
   sitemap: {
     hostname: 'https://aqli.shop',

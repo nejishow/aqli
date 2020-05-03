@@ -1,7 +1,17 @@
 <template>
   <div class="row justify-content-center">
     <div class="col-sm-12 col-md-5 card mt-5 p-5">
-      <h4>Connection</h4>
+      <div class="d-flex align-items-baseline justify-content-between">
+        <h4>Connection</h4>
+        <v-img
+          class="mx-2"
+          :src="require('~/assets/logo.png')"
+          max-height="30"
+          max-width="50"
+          contain
+          alt="Aqli-logo"
+        ></v-img>
+      </div>
       <div class="form-group">
         <div class="form-group">
           <label class="form-check-label small font-italic font-weight-bold"
@@ -22,7 +32,7 @@
           <input
             id="password"
             v-model="loginForm.password"
-            type="text"
+            type="password"
             class="form-control"
             placeholder="mot de passe"
           />
@@ -36,6 +46,12 @@
       <span class="text-danger bg-white rounded-pill text-center">{{
         error
       }}</span>
+      <router-link
+        :to="{
+          path: '/signUp'
+        }"
+        >Creer mon compte
+      </router-link>
     </div>
   </div>
 </template>

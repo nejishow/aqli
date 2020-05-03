@@ -11,7 +11,7 @@
             }"
           >
             <v-avatar size="80" tile>
-              <v-img :src="item.pics[0].src"> </v-img>
+              <v-img :src="item.pics[0].src" :alt="item.name"> </v-img>
             </v-avatar>
 
             <v-card-subtitle class=" font-weight-bold h6"
@@ -49,10 +49,7 @@ export default {
         arr[i] = arr[j]
         arr[j] = temp
       }
-      const prod = []
-      for (let index = 0; index < 10; index++) {
-        prod.push(arr[index])
-      }
+      const prod = arr.slice(0, 11)
       return prod
     }
   }
