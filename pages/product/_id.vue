@@ -195,7 +195,6 @@
           </div>
         </div>
       </div>
-
       <!-- parti des details et commentaires -->
       <div class="row">
         <div class="col-sm-12 col-md-8 border-top mt-3 pt-3">
@@ -229,6 +228,15 @@
           </div>
         </div> -->
       </div>
+      <!-- <div class="row">
+        <div class="col-sm-12">
+          <SameCategory
+            :id="product._id"
+            :id-product-type="product.idProductType"
+            :items="3"
+          ></SameCategory>
+        </div>
+      </div> -->
     </div>
   </div>
 </template>
@@ -237,7 +245,11 @@
 import $ from 'jquery'
 import { mapActions } from 'vuex'
 import productService from '~/services/productService.js'
+// import SameCategory from '~/components/SameCategory.vue'
 export default {
+  components: {
+    // SameCategory
+  },
   data() {
     return {
       isCharging: true,

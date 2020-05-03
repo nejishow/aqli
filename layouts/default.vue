@@ -61,6 +61,7 @@
               solo-inverted
               clearable
               dense
+              @keypress.enter="search($event)"
             >
               <v-icon slot="append" color="black">mdi-magnify</v-icon>
             </v-autocomplete>
@@ -256,18 +257,21 @@ export default {
       outline: true,
       right: true,
       rightDrawer: false,
-      searchWords: ''
+      searchWords: '',
+      searchResults: []
     }
   },
   computed: {
     ...mapGetters({
       getCategoryMenu: 'categoryMenu/getCategoryMenu',
-      getId: 'user/getId'
+      getId: 'user/getId',
+      allProducts: 'product/getAllProducts'
     })
   },
   async created() {
     try {
       await this.$store.dispatch('categoryMenu/fetchCategoryMenu')
+      await this.$store.dispatch('product/setProducts')
       if (
         localStorage.getItem('token') !== null &&
         localStorage.getItem('token') !== undefined
@@ -288,6 +292,17 @@ export default {
     }
   },
   methods: {
+    async search(event) {
+      this.searchResults = []
+      await this.allProducts.forEach((element) => {
+        if (element.keywords.includes(event.target.value)) {
+          this.searchResults.push(element)
+        }
+      })
+      this.$store.dispatch('product/setSearch', this.searchResults).then(() => {
+        this.$router.push('/search')
+      })
+    },
     goHome() {
       this.$router.push('/')
     },

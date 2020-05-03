@@ -2,30 +2,25 @@
   <!-- Stack the columns on mobile by making one full-width and the other half-width -->
   <div>
     <div class="row">
-      <div class="col-sm-12">
-        <v-carousel cycle>
+      <div class="col-sm-12">Publicité</div>
+      <div class="col-sm-8 d-flex flex-column">
+        <v-carousel cycle height="300">
           <v-carousel-item
             v-for="(item, i) in items"
             :key="i"
             :src="item.src"
           ></v-carousel-item>
         </v-carousel>
-      </div>
-      <div class="col-sm-12 d-flex justify-content-between">
-        <div class="card">
-          Livraison tous les soirs entre 19h et 22h
+        <div v-if="product.length == 0">
+          <v-card-title>Nouveautés</v-card-title>
+          <v-skeleton-loader type="list-item-two-line"> </v-skeleton-loader>
         </div>
-        <div class="card">
-          Livraison tous les soirs entre 19h et 22h
-        </div>
-        <div class="card">
-          Livraison tous les soirs entre 19h et 22h
+        <div v-else>
+          <Nouveautes class="big"></Nouveautes>
+          <Nouveautes class="small" :items="3"></Nouveautes>
         </div>
       </div>
-      <div class="col-sm-12">
-        <Nouveautes class="big"></Nouveautes>
-        <Nouveautes class="small" :items="1"></Nouveautes>
-      </div>
+      <div class="col-sm-4 big">Login</div>
     </div>
   </div>
 </template>
@@ -72,6 +67,9 @@ export default {
   computed: {
     categoryMenu() {
       return this.$store.state.categoryMenu.categoryMenu
+    },
+    product() {
+      return this.$store.state.product.allProducts
     }
   },
   methods: {

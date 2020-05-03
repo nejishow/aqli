@@ -3,73 +3,21 @@
     <div class="col-sm-12">
       <v-card-title>Nouveautés</v-card-title>
       <carousel :items="items">
-        <div>
-          <v-img
-            class="white--text align-end"
-            height="200px"
-            src="https://cdn.vuetifyjs.com/images/cards/docks.jpg"
+        <div v-for="(item, index) in products" :key="index" class="text-left">
+          <router-link
+            :to="{
+              path: '/product/' + item.name,
+              query: { id: item._id }
+            }"
           >
-            <v-card-title>Top 10 Australian beaches</v-card-title>
-          </v-img>
+            <v-avatar size="80" tile>
+              <v-img :src="item.pics[0].src"> </v-img>
+            </v-avatar>
 
-          <v-card-subtitle class="pb-0">Number 10</v-card-subtitle>
-
-          <v-card-text class="text--primary">
-            <div>Whitehaven Beach</div>
-
-            <div>Whitsunday Island, Whitsunday Islands</div>
-          </v-card-text>
-        </div>
-        <div>
-          <v-img
-            class="white--text align-end"
-            height="200px"
-            src="https://cdn.vuetifyjs.com/images/cards/docks.jpg"
-          >
-            <v-card-title>Top 10 Australian beaches</v-card-title>
-          </v-img>
-
-          <v-card-subtitle class="pb-0">Number 10</v-card-subtitle>
-
-          <v-card-text class="text--primary">
-            <div>Whitehaven Beach</div>
-
-            <div>Whitsunday Island, Whitsunday Islands</div>
-          </v-card-text>
-        </div>
-        <div>
-          <v-img
-            class="white--text align-end"
-            height="200px"
-            src="https://cdn.vuetifyjs.com/images/cards/docks.jpg"
-          >
-            <v-card-title>Top 10 Australian beaches</v-card-title>
-          </v-img>
-
-          <v-card-subtitle class="pb-0">Number 10</v-card-subtitle>
-
-          <v-card-text class="text--primary">
-            <div>Whitehaven Beach</div>
-
-            <div>Whitsunday Island, Whitsunday Islands</div>
-          </v-card-text>
-        </div>
-        <div>
-          <v-img
-            class="white--text align-end"
-            height="200px"
-            src="https://cdn.vuetifyjs.com/images/cards/docks.jpg"
-          >
-            <v-card-title>Top 10 Australian beaches</v-card-title>
-          </v-img>
-
-          <v-card-subtitle class="pb-0">Number 10</v-card-subtitle>
-
-          <v-card-text class="text--primary">
-            <div>Whitehaven Beach</div>
-
-            <div>Whitsunday Island, Whitsunday Islands</div>
-          </v-card-text>
+            <v-card-subtitle class=" font-weight-bold h6"
+              >{{ item.price }} fDJ</v-card-subtitle
+            >
+          </router-link>
         </div>
       </carousel>
     </div>
@@ -83,7 +31,29 @@ export default {
   props: {
     items: {
       type: Number,
-      default: 3
+      default: 7
+    }
+  },
+  data() {
+    return {
+      loading: [],
+      transition: 'scale-transition'
+    }
+  },
+  computed: {
+    products() {
+      const arr = this.$store.state.product.smartphones
+      for (let i = arr.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * i)
+        const temp = arr[i]
+        arr[i] = arr[j]
+        arr[j] = temp
+      }
+      const prod = []
+      for (let index = 0; index < 10; index++) {
+        prod.push(arr[index])
+      }
+      return prod
     }
   }
 }
