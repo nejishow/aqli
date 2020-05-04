@@ -10,6 +10,17 @@ const menuClient = axios.create({
 })
 
 export default {
+  postBanner(banner) {
+    return menuClient.post('/banner', {
+      params: banner
+    })
+  },
+  getBanners() {
+    return menuClient.get('/banners')
+  },
+  disable(id) {
+    return menuClient.post('/banner/' + id)
+  },
   getCategory() {
     return menuClient.get('/allCategory')
   },

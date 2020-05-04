@@ -23,7 +23,7 @@
         ></v-progress-circular>
       </div>
     </div>
-    <div v-show="!isCharging">
+    <div v-else>
       <div class="row">
         <!-- parti des photos  -->
         <div class="test col-sm-12 col-md-6 d-flex flex-column">
@@ -228,17 +228,17 @@
           </div>
         </div> -->
       </div>
-      <div class="row">
-        <div class="col-sm-8">
-          <SameCategory
-            :id="product._id"
-            :id-product-type="product.idProductType"
-            :items="3"
-          ></SameCategory>
-        </div>
-        <div class="col-sm-4 big">
-          <adsbygoogle />
-        </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-12">
+        <SameCategory
+          :id="product._id"
+          :id-product-type="product.idProductType"
+          :items="7"
+        ></SameCategory>
+      </div>
+      <div class="col-sm-12">
+        <adsbygoogle />
       </div>
     </div>
   </div>
@@ -467,5 +467,9 @@ export default {
   margin: 0 auto;
   left: 50%;
   margin-top: 20%;
+}
+.ads {
+  max-width: 300px;
+  max-height: 200px;
 }
 </style>

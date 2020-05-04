@@ -3,11 +3,15 @@ export const state = () => ({
   categoryMenu: [],
   subCategoryMenu: [],
   productType: [],
-  products: []
+  products: [],
+  banners: []
 })
 export const getters = {
   getCategoryMenu(state) {
     return state.categoryMenu
+  },
+  getBanners(state) {
+    return state.banners
   },
   getSubCategoryMenu(state) {
     return state.subCategoryMenu
@@ -31,6 +35,9 @@ export const mutations = {
   },
   SET_Product(state, products) {
     state.products = products
+  },
+  SETBanner(state, banners) {
+    state.banners = banners
   }
 }
 export const actions = {
@@ -82,6 +89,11 @@ export const actions = {
   fetchProducts({ commit }, id) {
     return MenuService.getProducts(id).then((response) => {
       commit('SET_Product', response.data)
+    })
+  },
+  fetchBanner({ commit }) {
+    return MenuService.getBanners().then((res) => {
+      commit('SETBanner', res.data)
     })
   }
 }

@@ -67,6 +67,11 @@
         </v-row>
       </div>
     </div>
+    <div class="row">
+      <div class="col-sm-12">
+        <adsbygoogle />
+      </div>
+    </div>
   </div>
 </template>
 

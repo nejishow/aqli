@@ -6,9 +6,9 @@
       <div class="col-sm-8 d-flex flex-column">
         <v-carousel cycle height="300">
           <v-carousel-item
-            v-for="(item, i) in items"
+            v-for="(banner, i) in banners"
             :key="i"
-            :src="item.src"
+            :src="banner.src"
           ></v-carousel-item>
         </v-carousel>
         <div v-if="product.length == 0">
@@ -20,7 +20,7 @@
           <Nouveautes class="small" :items="3"></Nouveautes>
         </div>
       </div>
-      <div class="col-sm-4 big">
+      <div class="col-sm-4">
         <adsbygoogle />
       </div>
     </div>
@@ -36,6 +36,7 @@ export default {
   async fetch({ store, error }) {
     try {
       await store.dispatch('categoryMenu/fetchCategoryMenu')
+      await store.dispatch('categoryMenu/fetchBanner')
     } catch (e) {
       error({
         statusCode: 503,
@@ -49,21 +50,7 @@ export default {
       slide: 0,
       sliding: null,
       visible: true,
-      test: [],
-      items: [
-        {
-          src: 'https://cdn.vuetifyjs.com/images/carousel/squirrel.jpg'
-        },
-        {
-          src: 'https://cdn.vuetifyjs.com/images/carousel/sky.jpg'
-        },
-        {
-          src: 'https://cdn.vuetifyjs.com/images/carousel/bird.jpg'
-        },
-        {
-          src: 'https://cdn.vuetifyjs.com/images/carousel/planet.jpg'
-        }
-      ]
+      test: []
     }
   },
   computed: {
@@ -72,6 +59,9 @@ export default {
     },
     product() {
       return this.$store.state.product.allProducts
+    },
+    banners() {
+      return this.$store.state.categoryMenu.banners
     }
   },
   methods: {

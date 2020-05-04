@@ -1,34 +1,31 @@
 <template>
   <div class="row">
     <div class="col-sm-12">
-      <span class="h6">Les produits du meme genre</span>
-      <no-ssr>
-        <!-- important to add no-ssr-->
-
-        <Carousel :items="items" :autoplay="true" :center="true">
-          <Slide
-            v-for="(item, index) in products"
-            :key="index"
-            class="text-left"
+      <h5>Decouvrez les produits du meme genre</h5>
+      <hr />
+      <Carousel
+        autoplay
+        autoplay-hover-pause
+        :per-page="items"
+        navigation-enabled
+      >
+        <Slide v-for="(item, index) in products" :key="index" class="text-left">
+          <router-link
+            :to="{
+              path: '/product/' + item.name,
+              query: { id: item._id }
+            }"
           >
-            <router-link
-              :to="{
-                path: '/product/' + item.name,
-                query: { id: item._id }
-              }"
-            >
-              <v-avatar size="150" tile>
-                <v-img :src="item.pics[0].src" :alt="item.name"> </v-img>
-              </v-avatar>
+            <v-avatar size="250" tile>
+              <v-img :src="item.pics[0].src" :alt="item.name"> </v-img>
+            </v-avatar>
 
-              <v-card-subtitle class=" font-weight-bold h6"
-                >{{ item.price }} fDJ</v-card-subtitle
-              >
-            </router-link>
-          </Slide>
-        </Carousel>
-      </no-ssr>
-      <!-- important to add no-ssr-->
+            <v-card-subtitle class=" font-weight-bold h6"
+              >{{ item.price }} fDJ</v-card-subtitle
+            >
+          </router-link>
+        </Slide>
+      </Carousel>
     </div>
   </div>
 </template>
