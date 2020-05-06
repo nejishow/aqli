@@ -38,9 +38,15 @@
           />
         </div>
         <div class="form-group d-flex">
-          <button class="btn btn-group btn-info rounded-pill" @click="submit">
-            Connexion
-          </button>
+          <v-btn
+            dark
+            color="#42275a"
+            :loading="loading"
+            class="btn btn-group rounded-pill"
+            @click="submit"
+          >
+            Connection
+          </v-btn>
         </div>
       </div>
       <span class="text-danger bg-white rounded-pill text-center">{{
@@ -61,6 +67,7 @@ export default {
   middleware: ['isNotAuth'],
   data() {
     return {
+      loading: false,
       loginForm: {
         email: '',
         password: ''
@@ -70,6 +77,7 @@ export default {
   },
   methods: {
     submit() {
+      this.loading = true
       return UserService.loginUser(
         this.loginForm.email,
         this.loginForm.password
@@ -85,6 +93,7 @@ export default {
             .then(() => this.$router.go(-1))
         })
         .catch((error) => {
+          this.loading = false
           this.error = error.response.data
         })
     }

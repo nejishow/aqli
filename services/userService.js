@@ -1,6 +1,6 @@
 import axios from 'axios'
 const apiClient = axios.create({
-  baseURL: 'https://aqli-ecommerce.herokuapp.com'
+  baseURL: 'http://localhost:3000'
 })
 apiClient.interceptors.request.use((config) => {
   config.headers.common.Authorization =
@@ -17,7 +17,7 @@ export default {
     })
   },
   signupUser(email, password) {
-    return apiClient.post('/users/login', {
+    return apiClient.post('/users', {
       params: {
         email,
         password

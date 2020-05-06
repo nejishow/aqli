@@ -2,7 +2,7 @@
   <div class="row justify-content-center">
     <div class="col-sm-12 col-md-5 card mt-5 p-5">
       <div class="d-flex align-items-baseline justify-content-between">
-        <h4>Connection</h4>
+        <h4>Inscription</h4>
         <v-img
           class="mx-2"
           :src="require('~/assets/logo.png')"
@@ -38,9 +38,15 @@
           />
         </div>
         <div class="form-group d-flex">
-          <button class="btn btn-group btn-info rounded-pill" @click="submit">
-            Connexion
-          </button>
+          <v-btn
+            dark
+            color="#42275a"
+            :loading="loading"
+            class="btn btn-group rounded-pill"
+            @click="submit"
+          >
+            Je m'inscris
+          </v-btn>
         </div>
       </div>
       <span class="text-danger bg-white rounded-pill text-center">{{
@@ -48,9 +54,9 @@
       }}</span>
       <router-link
         :to="{
-          path: '/signUp'
+          path: '/login'
         }"
-        >Creer mon compte
+        >Me connecter
       </router-link>
     </div>
   </div>
@@ -61,6 +67,7 @@ export default {
   middleware: ['isNotAuth'],
   data() {
     return {
+      loading: false,
       loginForm: {
         email: '',
         password: ''
@@ -70,7 +77,8 @@ export default {
   },
   methods: {
     submit() {
-      return UserService.loginUser(
+      this.loading = true
+      return UserService.signupUser(
         this.loginForm.email,
         this.loginForm.password
       )
@@ -84,8 +92,10 @@ export default {
             })
             .then(() => this.$router.go(-1))
         })
-        .catch((error) => {
-          this.error = error.response.data
+        .catch(() => {
+          this.loading = false
+          this.error =
+            "Une erreur s'est produite veuillez réessayer s'il vous plait"
         })
     }
   },
