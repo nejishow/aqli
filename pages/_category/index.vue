@@ -1,13 +1,12 @@
 <template>
   <div class="row">
     <div class="col-sm-12 col-md-3">
-      <v-card class="border-danger">
-        <v-list :shaped="shaped" color="#82B1FF">
-          <v-list-group value="true" :expand="!expand">
-            <template v-slot:activator>
-              <v-subheader>{{ title }}</v-subheader>
-            </template>
-
+      <v-list :shaped="shaped" class="theme">
+        <v-list-group value="true" :expand="!expand">
+          <template v-slot:activator>
+            <h5 class="text-light">{{ title }}</h5>
+          </template>
+          <v-list-item-group v-model="number" color="white">
             <v-list-item
               v-for="(sub, index) in subCategoryMenu"
               :key="index"
@@ -19,9 +18,9 @@
                 <v-list-item-title class="text-light" small v-text="sub.name" />
               </v-list-item-content>
             </v-list-item>
-          </v-list-group>
-        </v-list>
-      </v-card>
+          </v-list-item-group>
+        </v-list-group>
+      </v-list>
     </div>
     <div class="col-sm-12 col-md-9">
       <div class="row">
@@ -34,7 +33,7 @@
             :color="item.color"
             :to="{
               path: '/productType/' + item.name,
-              query: { id: item._id }
+              query: { id: item._id, sub: item.idSubCategory }
             }"
           >
             <v-row dense>
@@ -49,7 +48,7 @@
                       >
                         <v-progress-circular
                           indeterminate
-                          color="grey lighten-5"
+                          color="#42275a"
                         ></v-progress-circular>
                       </v-row>
                     </template>
@@ -105,7 +104,8 @@ export default {
       product: 0,
       keywords: '',
       title: this.$route.params.category,
-      expand: true
+      expand: true,
+      number: 0
     }
   },
   computed: mapState({
@@ -152,3 +152,8 @@ export default {
   }
 }
 </script>
+<style scoped>
+.theme {
+  background: linear-gradient(to right, #42275a, #734b6d);
+}
+</style>

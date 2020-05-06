@@ -10,7 +10,7 @@
           fixed
           app
         >
-          <v-toolbar color="indigo" dark>
+          <v-toolbar class="theme" dark>
             <v-toolbar-title>Categories</v-toolbar-title>
           </v-toolbar>
           <v-list dense nav>
@@ -30,7 +30,7 @@
             </v-list-item>
           </v-list>
         </v-navigation-drawer>
-        <v-app-bar :clipped-left="clipped" fixed app color="#E3F2FD">
+        <v-app-bar :clipped-left="clipped" collapse-on-scroll app>
           <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
           <v-img
             class="mx-2"
@@ -42,17 +42,33 @@
             @click="goHome"
           ></v-img>
           <v-spacer />
-          <v-tabs right class="bigScreen" hide-slider>
-            <v-tab router exact to="/" color="#AB47BC">Acceuil</v-tab>
-            <v-tab v-if="getId" router exact :to="'/profil/' + getId"
+          <v-tabs right class="bigScreen" hide-slider color="#42275a">
+            <v-tab class="border" router exact to="/" background="#116466"
+              >Acceuil</v-tab
+            >
+            <v-tab
+              v-if="getId"
+              class="border"
+              router
+              exact
+              :to="'/profil/' + getId"
               >Profil</v-tab
             >
-            <v-tab v-if="getId" router exact :to="'/panier/' + getId"
+            <v-tab
+              v-if="getId"
+              class="border"
+              router
+              exact
+              :to="'/panier/' + getId"
               >Panier</v-tab
             >
-            <v-tab v-if="!getId" to="/login" router exact>Connection</v-tab>
-            <v-tab v-if="!getId" to="/signUp" router exact>Inscription</v-tab>
-            <v-tab v-if="getId" router exact @click="logout"
+            <v-tab v-if="!getId" class="border" to="/login" router exact
+              >Connection</v-tab
+            >
+            <v-tab v-if="!getId" class="border" to="/signUp" router exact
+              >Inscription</v-tab
+            >
+            <v-tab v-if="getId" class="border" router exact @click="logout"
               >Deconnection</v-tab
             >
           </v-tabs>
@@ -61,18 +77,18 @@
               <div class="col-sm-6 col-md-6">
                 <v-autocomplete
                   v-model="searchWords"
+                  class="searchBar"
                   cache-items
-                  class=""
-                  flat
                   hide-no-data
                   hide-details
                   label="Rechercher"
-                  solo-inverted
+                  color="#42275a"
+                  outlined
                   clearable
                   dense
                   @keypress.enter="search($event)"
                 >
-                  <v-icon slot="append" color="black">mdi-magnify</v-icon>
+                  <v-icon slot="append" color="#42275a">mdi-magnify</v-icon>
                 </v-autocomplete>
               </div>
             </div>
@@ -137,12 +153,12 @@
             </v-list-item>
           </v-list>
         </v-navigation-drawer>
-        <v-footer color="#E3F2FD">
+        <v-footer>
           <div class="row bigScreen">
             <div class="col-sm-12 col-md-3">
               <span class="h6">Shopping</span>
 
-              <v-list dense color="#E3F2FD">
+              <v-list dense class="list">
                 <v-list-item
                   v-for="(item, i) in getCategoryMenu"
                   :key="i"
@@ -163,7 +179,7 @@
             </div>
             <div class="col-sm-12 col-md-3">
               <span class="h6">Plus d'information</span>
-              <v-list dense color="#E3F2FD">
+              <v-list dense class="list">
                 <v-list-item>
                   <v-list-item-content>
                     <span class="caption font-weight-light">AQLI</span>
@@ -213,8 +229,7 @@
               <div
                 v-for="(item, i) in getCategoryMenu"
                 :key="i"
-                class="d-flex"
-                color="#E3F2FD"
+                class="d-flex list"
                 :to="{
                   path: '/' + item.name,
                   query: { id: item._id }
@@ -349,6 +364,9 @@ export default {
 }
 </script>
 <style scoped>
+v-tab {
+  background: #116466;
+}
 @media (min-width: 770px) {
   .littleScreen {
     display: none;
@@ -358,5 +376,16 @@ export default {
   .bigScreen {
     display: none;
   }
+}
+.theme {
+  background: linear-gradient(to right, #42275a, #734b6d);
+}
+.searchBar {
+  background: #ede7f6;
+  border: #42275a;
+  text-decoration-color: #42275a;
+}
+.list {
+  background: transparent;
 }
 </style>

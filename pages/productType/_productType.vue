@@ -12,8 +12,31 @@
       </div>
     </div>
     <div v-show="!isCharging" class="row">
-      <div class=" col-sm-12 col-md-3">
-        <h3>{{ this.$route.params.productType }}</h3>
+      <div class="col-sm-12 col-md-3">
+        <v-list dense :shaped="shaped" class="theme">
+          <v-list-group value="true" color="white">
+            <template v-slot:activator>
+              <h5 class="text-light">{{ ProductTypeName }}</h5>
+            </template>
+            <v-list-item-group color="white">
+              <v-list-item
+                v-for="(sub, index) in productType"
+                :key="index"
+                :name="sub._id"
+                :inactive="inactive"
+                @click="getProducts(sub._id, sub.name)"
+              >
+                <v-list-item-content>
+                  <v-list-item-title
+                    class="text-light"
+                    small
+                    v-text="sub.name"
+                  />
+                </v-list-item-content>
+              </v-list-item>
+            </v-list-item-group>
+          </v-list-group>
+        </v-list>
       </div>
 
       <div class="col-sm-12 col-md-9">
@@ -73,13 +96,24 @@
 <script>
 import menuService from '~/services/menuService.js'
 export default {
+  async fetch({ store, query }) {
+    await store.dispatch('categoryMenu/fetchProductType', query.sub)
+  },
   data() {
     return {
       showDialog: false,
       shaped: true,
       keywords: '',
       products: [],
-      isCharging: true
+      isCharging: true,
+      expand: false,
+      inactive: false,
+      ProductTypeName: this.$route.params.productType
+    }
+  },
+  computed: {
+    productType() {
+      return this.$store.state.categoryMenu.productType
     }
   },
   async mounted() {
@@ -105,6 +139,14 @@ export default {
       })
     }
   },
+  methods: {
+    getProducts(id, name) {
+      menuService.getProducts(id).then((response) => {
+        this.products = response.data
+        this.ProductTypeName = name
+      })
+    }
+  },
   head() {
     return {
       title: this.$route.params.productType,
@@ -118,6 +160,7 @@ export default {
         },
         {
           name: 'keywords',
+          hid: 'keywords',
           content:
             this.$route.params.productType +
             'aqli, ecommerce, djibouti, livraison, 24h' +
@@ -151,5 +194,8 @@ img {
     display: flex;
     flex-direction: column;
   }
+}
+.theme {
+  background: linear-gradient(to right, #42275a, #734b6d);
 }
 </style>
