@@ -16,7 +16,7 @@ export const mutations = {
 export const actions = {
   setPanier({ commit }) {
     if (localStorage.getItem('token')) {
-      panierService.getPanier().then(async (response) => {
+      return panierService.getPanier().then(async (response) => {
         await commit('SET_PANIER', response.data)
       })
     }

@@ -39,7 +39,12 @@
           </div>
           <div class="col-sm-12 col-md-7">
             <div>
-              <router-link :to="`/product/${item.idProduct}`">
+              <router-link
+                :to="{
+                  path: '/product/' + item.name,
+                  query: { id: item._id }
+                }"
+              >
                 <span class="font-weight-light text-dark d-flex flex-wrap">
                   <h5>{{ item.name }}</h5>
                   <h5 v-if="item.color">, Couleur: {{ item.color }}</h5>

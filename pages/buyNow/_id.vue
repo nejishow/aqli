@@ -47,7 +47,12 @@
               </div>
               <div class="col-sm-12 col-md-7">
                 <div>
-                  <router-link :to="`/product/${item.idProduct}`">
+                  <router-link
+                    :to="{
+                      path: '/product/' + item.name,
+                      query: { id: item._id }
+                    }"
+                  >
                     <span class="font-weight-light text-dark d-flex flex-wrap">
                       <span class="">{{ item.name }}</span>
                       <span v-if="item.color" class="small"
@@ -103,9 +108,6 @@ import panierService from '~/services/panierService.js'
 export default {
   async asyncData({ redirect, store }) {
     await store.dispatch('panier/setPanier')
-    if (store.state.panier.panier.length === 0) {
-      redirect('/')
-    }
   },
   middleware: ['auth'],
   data() {
@@ -127,6 +129,11 @@ export default {
         this.total += element.quantity * element.price
       })
       return this.total + 500
+    }
+  },
+  mounted() {
+    if (this.$store.state.panier.panier.length === 0) {
+      this.$router.push('/')
     }
   },
   methods: {

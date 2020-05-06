@@ -16,14 +16,38 @@
               query: { id: item._id }
             }"
           >
-            <v-avatar size="250" tile>
-              <v-img :src="item.pics[0].src" :alt="item.name"> </v-img>
+            <v-avatar :size="size" tile>
+              <v-img
+                :src="item.pics[0].src"
+                :lazy-src="item.pics[0].src"
+                :alt="item.name"
+              >
+                <template v-slot:placeholder>
+                  <v-row
+                    class="fill-height ma-0"
+                    align="center"
+                    justify="center"
+                  >
+                    <v-progress-circular
+                      indeterminate
+                      color="grey lighten-5"
+                    ></v-progress-circular>
+                  </v-row>
+                </template>
+              </v-img>
             </v-avatar>
-
-            <v-card-subtitle class=" font-weight-bold h6"
-              >{{ item.price }} fDJ</v-card-subtitle
-            >
           </router-link>
+
+          <div class="text-left d-flex flex-column">
+            <span class="h6 font-weight-light">{{ item.name }}</span>
+            <div class="text-center d-flex">
+              <v-rating v-model="item.rating" readonly dense small></v-rating>
+              ({{ item.ratings.length }})
+            </div>
+            <span class=" font-weight-bold text-left"
+              >Prix: {{ item.price }} Fdj</span
+            >
+          </div>
         </Slide>
       </Carousel>
     </div>
@@ -35,9 +59,13 @@ import { Carousel, Slide } from 'vue-carousel'
 export default {
   components: { Carousel, Slide },
   props: {
+    size: {
+      type: Number,
+      default: 200
+    },
     items: {
       type: Number,
-      default: 7
+      default: 3
     },
     idProductType: {
       type: String,

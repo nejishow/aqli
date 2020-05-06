@@ -20,9 +20,6 @@
           <Nouveautes class="small" :items="3"></Nouveautes>
         </div>
       </div>
-      <div class="col-sm-4">
-        <adsbygoogle />
-      </div>
     </div>
   </div>
 </template>
