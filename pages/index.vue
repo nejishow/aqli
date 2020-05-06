@@ -1,8 +1,7 @@
 <template>
   <!-- Stack the columns on mobile by making one full-width and the other half-width -->
-  <div>
+  <v-col>
     <div class="row">
-      <div class="col-sm-12">Publicité</div>
       <div class="col-sm-8 d-flex flex-column">
         <v-carousel cycle height="300">
           <v-carousel-item
@@ -20,8 +19,11 @@
           <Nouveautes class="small" :items="3"></Nouveautes>
         </div>
       </div>
+      <div class="col-sm-4 border">
+        Pub
+      </div>
     </div>
-  </div>
+  </v-col>
 </template>
 
 <script>
