@@ -50,7 +50,7 @@
                   <router-link
                     :to="{
                       path: '/product/' + item.name,
-                      query: { id: item._id }
+                      query: { id: item.idProduct }
                     }"
                   >
                     <span class="font-weight-light text-dark d-flex flex-wrap">
@@ -84,7 +84,6 @@
           <div class="card-body teal lighten-4">
             <v-subheader>Recapitulatif</v-subheader>
             <p>Prix des produits: {{ total }} FDj</p>
-            <p>Frais de livraison: 500 FDj</p>
             <v-divider></v-divider>
             <p class="bold">Total: {{ totalCommande }} FDj</p>
           </div>
@@ -97,6 +96,7 @@
           >
             Confirmer
           </button>
+          <v-btn v-if="sent" :loading="sent" color="purple"></v-btn>
         </div>
       </div>
     </div>
@@ -128,7 +128,7 @@ export default {
       this.panier.forEach((element) => {
         this.total += element.quantity * element.price
       })
-      return this.total + 500
+      return this.total
     }
   },
   mounted() {
@@ -150,7 +150,7 @@ export default {
           quantity: element.quantity,
           price: element.price,
           garantit: element.garantit,
-          serial: element.serial
+          owner: element.owner
         })
       })
       this.finalcommand = {

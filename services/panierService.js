@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 const panierClient = axios.create({
-  baseURL: 'https://aqli-ecommerce.herokuapp.com',
+  baseURL: 'https://aqli-ecommerce.herokuapp.com', // https://aqli-ecommerce.herokuapp.com
   withCredentials: false,
   headers: {
     Accept: 'application/json',

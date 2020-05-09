@@ -280,7 +280,7 @@ export default {
           name: this.product.name,
           src: this.src,
           idProduct: this.product._id,
-          serial: this.product.serial,
+          owner: this.product.owner,
           color: null,
           size: null,
           garantit: this.product.garantit,

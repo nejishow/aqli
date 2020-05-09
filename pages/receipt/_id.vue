@@ -13,7 +13,10 @@
           <v-list-item
             v-for="(item, i) in commands.commands"
             :key="i"
-            :to="`/product/${item.idProduct}`"
+            :to="{
+              path: '/product/' + item.name,
+              query: { id: item.idProduct }
+            }"
           >
             <v-list-item-avatar>
               <v-img :src="item.src" :alt="item.name"></v-img>
