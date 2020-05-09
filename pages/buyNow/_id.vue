@@ -81,22 +81,29 @@
         class="col-sm-12 col-md-4 pt-5 d-flex justify-content-top align-items-center flex-column"
       >
         <div v-show="panier.length >= 1" class="card" style="width: 18rem;">
-          <div class="card-body teal lighten-4">
-            <v-subheader>Recapitulatif</v-subheader>
-            <p>Prix des produits: {{ total }} FDj</p>
-            <v-divider></v-divider>
-            <p class="bold">Total: {{ totalCommande }} FDj</p>
+          <div class="card-body theme text-light">
+            <v-card-title class="text-light text-left"
+              >Recapitulatif</v-card-title
+            >
+            <p>
+              Nombre de produits:
+              <span class="h4">{{ panier.length }}</span>
+            </p>
+            <v-divider color="white"></v-divider>
+            <p class="bold">
+              Total: <span class="h4">{{ totalCommande }}</span> FDj
+            </p>
           </div>
         </div>
         <div class="text-right mt-3">
-          <button
+          <v-btn
             v-if="panier.length >= 1 && user.address && !sent"
-            class="btn btn-success"
+            class="btn theme text-light"
             @click="command"
           >
             Confirmer
-          </button>
-          <v-btn v-if="sent" :loading="sent" color="purple"></v-btn>
+          </v-btn>
+          <v-btn v-if="sent" :loading="sent" class="theme"></v-btn>
         </div>
       </div>
     </div>
@@ -185,3 +192,8 @@ export default {
   }
 }
 </script>
+<style scoped>
+.theme {
+  background: linear-gradient(to right, #42275a, #734b6d);
+}
+</style>

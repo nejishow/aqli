@@ -82,8 +82,9 @@ export default {
             "Surfez et consulter tous les produits disponibles, et en un quelques clics faites vous livrer. Avec Aqli le shopping c'est chez vous!"
         },
         {
+          hid: 'keywords',
           name: 'keywords',
-          content: 'aqli, ecommerce, djibouti, livraison, 24h'
+          content: 'aqli,e-commerce, ecommerce, djibouti, livraison, 24h'
         }
       ]
     }

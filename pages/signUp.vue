@@ -107,6 +107,12 @@ export default {
           hid: 'description',
           name: 'description',
           content: 'Creer vous un compte sur Aqli et demarrez en trombe!! :)'
+        },
+        {
+          hid: 'keywords',
+          name: 'keywords',
+          content:
+            'aqli, e-commerce, ecommerce, djibouti, livraison, 24h, inscription, sign up, signup'
         }
       ]
     }

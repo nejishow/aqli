@@ -122,7 +122,7 @@ export default {
         this.products = response.data
       })
       await this.products.forEach((element) => {
-        this.keywords += ', ' + element.name
+        this.keywords += ', ' + element.keywords + ', ' + element.name
       })
       this.isCharging = false
     } catch (e) {

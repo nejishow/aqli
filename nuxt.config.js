@@ -84,7 +84,14 @@ export default {
       })
       const productType = menuService.getAllProductType().then((response) => {
         return response.data.map((event) => {
-          return 'productType/' + event.name + '?id=' + event._id
+          return (
+            'productType/' +
+            event.name +
+            '?id=' +
+            event._id +
+            '&sub=' +
+            event.idSubCategory
+          )
         })
       })
 

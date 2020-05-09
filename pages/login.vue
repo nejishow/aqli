@@ -107,6 +107,12 @@ export default {
           name: 'description',
           content:
             'Connecter vous sur la plateforme Aqli, et envoyez nous vos commandes!'
+        },
+        {
+          hid: 'keywords',
+          name: 'keywords',
+          content:
+            'aqli, ecommerce, djibouti, livraison, 24h, connection, login'
         }
       ]
     }
