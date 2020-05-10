@@ -12,7 +12,7 @@
     </div>
     <div
       v-if="bought.length == 0 && isCharging === false"
-      class="noData d-flex flex-column"
+      class="noData d-flex flex-column white"
     >
       <div>
         <div class="card-body">
@@ -22,7 +22,7 @@
         </div>
       </div>
     </div>
-    <div v-show="bought.length > 0" class="row">
+    <div v-show="bought.length > 0" class="row white">
       <div class="col-sm-12 col-md-8 pt-4">
         <h4 class="font-italic">
           <u>Mes commandes en attentes</u>
@@ -39,15 +39,20 @@
                     new Date(command.createdAt).getFullYear()
                   }}</v-subheader
                 >
-                <button
-                  v-if="command.enabled"
+                <v-btn
+                  v-if="command.enabled && !cancelall"
                   class="btn btn-danger m-2"
                   small
                   color="error"
                   @click="cancelAll(command._id)"
                 >
                   Annuler tout
-                </button>
+                </v-btn>
+                <v-btn
+                  v-show="cancelall"
+                  class="btn btn-danger m-2"
+                  :loading="cancelall"
+                ></v-btn>
               </div>
               <v-list-item-group
                 v-for="(item, index) in command.commands"
@@ -94,12 +99,17 @@
                         >voir le produit</v-btn
                       >
                       <v-btn
-                        v-if="item.enabled"
+                        v-if="item.enabled && !cancelOne"
                         small
                         color="error"
                         @click="cancel(item._id)"
                         >annuler</v-btn
                       >
+                      <v-btn
+                        v-show="cancelOne"
+                        color="error"
+                        :loading="cancelOne"
+                      ></v-btn>
                     </v-col>
                   </v-row>
                 </v-list-item>
@@ -124,15 +134,16 @@
                     new Date(command.createdAt).getFullYear()
                   }}</v-subheader
                 >
-                <button
-                  v-if="command.enabled"
+                <v-btn
+                  v-if="command.enabled && !allsup"
                   class="btn btn-danger m-2"
                   small
                   color="error"
                   @click="supAll(command._id)"
                 >
                   Supprimer tout
-                </button>
+                </v-btn>
+                <v-btn v-show="allsup" color="error" :loading="allsup"></v-btn>
               </div>
               <v-list-item-group
                 v-for="(item, index) in command.commands"
@@ -166,18 +177,25 @@
                     </v-col>
                     <v-col sm="12">
                       <v-btn
-                        v-if="item.enabled"
+                        v-if="item.enabled && !supp"
                         small
                         color="orange"
                         @click="sup(item._id)"
                         >Supprimer</v-btn
                       >
                       <v-btn
-                        v-if="item.enabled"
+                        v-show="supp"
+                        color="orange"
+                        :loading="supp"
+                      ></v-btn>
+
+                      <v-btn
+                        v-if="item.enabled && !rendre"
                         small
                         @click="getBack(item._id)"
                         >Rendre</v-btn
                       >
+                      <v-btn v-show="rendre" :loading="rendre"></v-btn>
                     </v-col>
                   </v-row>
                 </v-list-item>
@@ -195,7 +213,12 @@ export default {
   data() {
     return {
       total: 0,
-      isCharging: true
+      isCharging: true,
+      allsup: false,
+      supp: false,
+      rendre: false,
+      cancelOne: false,
+      cancelall: false
     }
   },
   middleware: ['auth'],
@@ -209,19 +232,57 @@ export default {
   },
   methods: {
     cancel(id) {
-      this.$store.dispatch('product/cancelOneItem', id)
+      this.cancelOne = true
+      this.$store
+        .dispatch('product/cancelOneItem', id)
+        .then(() => {
+          this.cancelOne = false
+        })
+        .catch(() => {
+          this.cancelOne = false
+        })
     },
     cancelAll(id) {
-      this.$store.dispatch('product/cancelCommand', id)
+      this.cancelall = true
+      this.$store
+        .dispatch('product/cancelCommand', id)
+        .then(() => {
+          this.cancelall = false
+        })
+        .catch(() => {
+          this.cancelall = false
+        })
     },
     getBack(id) {
-      this.$store.dispatch('product/getBackItem', id)
+      this.$store
+        .dispatch('product/getBackItem', id)
+        .then(() => {
+          this.rendre = false
+        })
+        .catch(() => {
+          this.rendre = false
+        })
     },
     supAll(id) {
-      this.$store.dispatch('product/supAll', id)
+      this.allsup = true
+      this.$store
+        .dispatch('product/supAll', id)
+        .then(() => {
+          this.allsup = false
+        })
+        .catch(() => {
+          this.allsup = false
+        })
     },
     sup(id) {
-      this.$store.dispatch('product/sup', id)
+      this.$store
+        .dispatch('product/sup', id)
+        .then(() => {
+          this.supp = false
+        })
+        .catch(() => {
+          this.supp = false
+        })
     }
   },
   head() {

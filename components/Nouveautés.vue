@@ -1,8 +1,8 @@
 <template>
   <div class="row">
-    <div class="col-sm-12">
-      <v-card-title>Nouveautés</v-card-title>
-      <carousel :items="items">
+    <div class="col-sm-12 white">
+      <h5>Nouveautés</h5>
+      <carousel :items="items" class="white">
         <div v-for="(item, index) in products" :key="index" class="text-left">
           <router-link
             :to="{
@@ -11,7 +11,20 @@
             }"
           >
             <v-avatar size="80" tile>
-              <v-img :src="item.pics[0].src" :alt="item.name"> </v-img>
+              <v-img :src="item.pics[0].src" :alt="item.name">
+                <template v-slot:placeholder>
+                  <v-row
+                    class="fill-height ma-0"
+                    align="center"
+                    justify="center"
+                  >
+                    <v-progress-circular
+                      indeterminate
+                      color="#42275a"
+                    ></v-progress-circular>
+                  </v-row>
+                </template>
+              </v-img>
             </v-avatar>
 
             <v-card-subtitle class=" font-weight-bold h6"

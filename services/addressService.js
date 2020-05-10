@@ -43,5 +43,8 @@ export default {
   },
   getCommand(id) {
     return addressClient.get('/command/' + id) // add command
+  },
+  getOneBoutique(id) {
+    return addressClient.get('/boutique/' + id)
   }
 }

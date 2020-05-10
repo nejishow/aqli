@@ -27,11 +27,7 @@
                 @click="getProducts(sub._id, sub.name)"
               >
                 <v-list-item-content>
-                  <v-list-item-title
-                    class="text-light"
-                    small
-                    v-text="sub.name"
-                  />
+                  <v-list-item-title small v-text="sub.name" />
                 </v-list-item-content>
               </v-list-item>
             </v-list-item-group>

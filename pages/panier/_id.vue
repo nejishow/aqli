@@ -10,7 +10,7 @@
         ></v-progress-circular>
       </div>
     </div>
-    <div v-if="panier.length === 0" class="noData d-flex flex-column">
+    <div v-if="panier.length === 0" class="noData d-flex flex-column white">
       <div>
         <div class="card-body">
           <p class="card-text h5">Oh... votre panier est vide...</p>
@@ -20,7 +20,7 @@
         <button class="btn btn-success">Retourner à l'acceuil</button>
       </router-link>
     </div>
-    <div v-show="panier.length > 0" class="row">
+    <div v-show="panier.length > 0" class="row white">
       <div class="col-sm-12 col-md-8 pt-4">
         <h4 class="font-italic">
           <u>Mon panier</u>

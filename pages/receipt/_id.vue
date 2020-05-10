@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="white">
     <h3>Ma commande</h3>
     <p>
       Récapitulatif de la commande effectué le
@@ -18,9 +18,9 @@
               query: { id: item.idProduct }
             }"
           >
-            <v-list-item-avatar>
+            <v-avatar size="100" tile>
               <v-img :src="item.src" :alt="item.name"></v-img>
-            </v-list-item-avatar>
+            </v-avatar>
             <v-list-item-content>
               <v-list-item-title v-text="item.name"></v-list-item-title>
               <v-list-item-subtitle

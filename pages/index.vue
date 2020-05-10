@@ -3,24 +3,77 @@
   <v-col>
     <div class="row">
       <div class="col-sm-8 d-flex flex-column">
-        <v-carousel cycle height="300">
+        <v-carousel cycle height="300" class="carousel">
           <v-carousel-item
             v-for="(banner, i) in banners"
             :key="i"
             :src="banner.src"
           ></v-carousel-item>
         </v-carousel>
-        <div v-if="product.length == 0">
-          <v-card-title>Nouveautés</v-card-title>
+        <div v-if="product.length == 0" class="white">
+          <h5>Nouveautés</h5>
           <v-skeleton-loader type="list-item-two-line"> </v-skeleton-loader>
         </div>
-        <div v-else>
+        <div v-else class="p-2 mt-2">
           <Nouveautes class="big"></Nouveautes>
           <Nouveautes class="small" :items="3"></Nouveautes>
         </div>
       </div>
       <div class="col-sm-4 border">
         Pub
+      </div>
+    </div>
+    <div class="row d-flex justify-space-between">
+      <div class="col-sm-12 col-md-6 white">
+        <h6 class="font-weight-bold">Top selection</h6>
+      </div>
+      <div class="col-sm-12 col-md-6 white">
+        <h6 class="font-weight-bold">Deal de la semaine</h6>
+      </div>
+    </div>
+    <div v-if="all === []" class="row">
+      <div class="col">
+        test
+      </div>
+    </div>
+    <div v-else class="row">
+      <div class="col-sm-12">
+        <h6 class="font-weight-bold">Plus de produits</h6>
+      </div>
+      <div class="col-sm-12 d-flex justify-content-between flex-wrap">
+        <div
+          v-for="(item, index) in all"
+          :key="index"
+          class="white text-center mb-2"
+        >
+          <router-link
+            :to="{
+              path: '/product/' + item.name,
+              query: { id: item._id }
+            }"
+          >
+            <v-avatar size="110" tile>
+              <v-img :src="item.pics[0].src" :alt="item.name">
+                <template v-slot:placeholder>
+                  <v-row
+                    class="fill-height ma-0"
+                    align="center"
+                    justify="center"
+                  >
+                    <v-progress-circular
+                      indeterminate
+                      color="#42275a"
+                    ></v-progress-circular>
+                  </v-row>
+                </template>
+              </v-img>
+            </v-avatar>
+
+            <v-card-subtitle class=" font-weight-bold h6"
+              >{{ item.price }} fDJ</v-card-subtitle
+            >
+          </router-link>
+        </div>
       </div>
     </div>
   </v-col>
@@ -61,6 +114,17 @@ export default {
     },
     banners() {
       return this.$store.state.categoryMenu.banners
+    },
+    all() {
+      const arr = this.$store.state.product.allProducts
+      for (let i = arr.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * i)
+        const temp = arr[i]
+        arr[i] = arr[j]
+        arr[j] = temp
+      }
+      const prod = arr.slice(0, 50)
+      return prod
     }
   },
   methods: {
@@ -91,7 +155,7 @@ export default {
   }
 }
 </script>
-<style lang="css" scoped>
+<style lang="css">
 b-list-group-item {
   font-size: small;
 }
@@ -104,5 +168,12 @@ b-list-group-item {
   .small {
     display: none;
   }
+}
+.carousel {
+  border-radius: 20px;
+}
+.white {
+  background: white;
+  border-radius: 5px;
 }
 </style>

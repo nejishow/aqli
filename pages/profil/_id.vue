@@ -2,26 +2,28 @@
   <div>
     <div class="row">
       <div class="col-sm-12 col-md-3">
-        <v-list shaped>
-          <v-list-group value="true" :expand="!expand">
+        <v-list shaped class="theme">
+          <v-list-group value="true" :expand="!expand" color="white">
             <template v-slot:activator>
-              <v-subheader><u>Mon profil</u></v-subheader>
+              <v-subheader><u class="text-light">Mon profil</u></v-subheader>
             </template>
-            <v-list-item @click="pro">
-              <v-list-item-content>
-                <v-list-item-title>Mes informations</v-list-item-title>
-              </v-list-item-content>
-            </v-list-item>
-            <v-list-item @click="wish">
-              <v-list-item-content>
-                <v-list-item-title>Mes produits favoris</v-list-item-title>
-              </v-list-item-content>
-            </v-list-item>
-            <v-list-item @click="bou">
-              <v-list-item-content>
-                <v-list-item-title>Mes achats</v-list-item-title>
-              </v-list-item-content>
-            </v-list-item>
+            <v-list-item-group v-model="number" color="white">
+              <v-list-item @click="pro">
+                <v-list-item-content>
+                  <v-list-item-title>Mes informations</v-list-item-title>
+                </v-list-item-content>
+              </v-list-item>
+              <v-list-item @click="wish">
+                <v-list-item-content>
+                  <v-list-item-title>Mes produits favoris</v-list-item-title>
+                </v-list-item-content>
+              </v-list-item>
+              <v-list-item @click="bou">
+                <v-list-item-content>
+                  <v-list-item-title>Mes achats</v-list-item-title>
+                </v-list-item-content>
+              </v-list-item>
+            </v-list-item-group>
           </v-list-group>
         </v-list>
       </div>
@@ -56,6 +58,7 @@ export default {
       bought: false,
       wishList: false,
       panier: false,
+      number: 0,
       expand: true
     }
   },
@@ -102,3 +105,8 @@ export default {
   }
 }
 </script>
+<style scoped>
+.theme {
+  background: linear-gradient(to right, #42275a, #734b6d);
+}
+</style>

@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="row">
-      <div class="col-sm-12">
+      <div class="col-sm-12 white">
         <h5>Politique de services</h5>
         <p>
           Lorem Ipsum is simply dummy text of the printing and typesetting
@@ -16,7 +16,7 @@
         </p>
       </div>
     </div>
-    <div class="row">
+    <div class="row mt-3">
       <div class="col-sm-12 col-md-8">
         <div v-show="panier.length >= 1" class="row">
           <div v-if="user.address" class="col-sm-12 card border-info">
@@ -32,7 +32,7 @@
               commande.
             </p>
           </div>
-          <div class="col-sm-12 col-md-8 pt-4">
+          <div class="col-sm-12 pt-4 white mt-2">
             <div
               v-for="(item, index) in panier"
               :key="index"
@@ -157,7 +157,9 @@ export default {
           quantity: element.quantity,
           price: element.price,
           garantit: element.garantit,
-          owner: element.owner
+          owner: element.owner,
+          boutique: element.boutique,
+          number: element.number
         })
       })
       this.finalcommand = {

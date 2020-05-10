@@ -47,33 +47,23 @@
             @click="goHome"
           ></v-img>
           <v-spacer />
-          <v-tabs right class="bigScreen" hide-slider color="#42275a">
-            <v-tab class="border" router exact to="/" background="#116466"
-              >Acceuil</v-tab
-            >
-            <v-tab
-              v-if="getId"
-              class="border"
-              router
-              exact
-              :to="'/profil/' + getId"
+          <v-tabs
+            height="50"
+            right
+            class="bigScreen"
+            hide-slider
+            color="#42275a"
+          >
+            <v-tab router exact to="/" background="#116466">Acceuil</v-tab>
+            <v-tab v-if="getId" router exact :to="'/profil/' + getId"
               >Profil</v-tab
             >
-            <v-tab
-              v-if="getId"
-              class="border"
-              router
-              exact
-              :to="'/panier/' + getId"
+            <v-tab v-if="getId" router exact :to="'/panier/' + getId"
               >Panier</v-tab
             >
-            <v-tab v-if="!getId" class="border" to="/login" router exact
-              >Connection</v-tab
-            >
-            <v-tab v-if="!getId" class="border" to="/signUp" router exact
-              >Inscription</v-tab
-            >
-            <v-tab v-if="getId" class="border" router exact @click="logout"
+            <v-tab v-if="!getId" to="/login" router exact>Connection</v-tab>
+            <v-tab v-if="!getId" to="/signUp" router exact>Inscription</v-tab>
+            <v-tab v-if="getId" router exact @click="logout"
               >Deconnection</v-tab
             >
           </v-tabs>
@@ -106,7 +96,7 @@
             <v-icon>mdi-menu</v-icon>
           </v-btn>
         </v-app-bar>
-        <v-content>
+        <v-content class="wrapper">
           <v-container>
             <v-row v-show="deconnection" class="text-center">
               <v-col>
@@ -115,7 +105,7 @@
                 </v-card>
               </v-col>
             </v-row>
-            <v-col class="border">
+            <v-col>
               PUB
             </v-col>
             <nuxt v-show="!deconnection" />
@@ -392,5 +382,8 @@ v-tab {
 }
 .list {
   background: transparent;
+}
+.wrapper {
+  background: #f3e5f5;
 }
 </style>

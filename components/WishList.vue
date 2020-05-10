@@ -12,7 +12,7 @@
     </div>
     <div
       v-if="wishlist.length == 0 && isCharging === false"
-      class="noData d-flex flex-column"
+      class="noData d-flex flex-column white"
     >
       <div>
         <div class="card-body">
@@ -23,16 +23,16 @@
       </div>
     </div>
     <div v-show="wishlist.length > 0" class="row">
-      <div class="col-sm-12 col-md-8 pt-4">
+      <div class="col-sm-12 col-md-8 pt-4 white">
         <h4 class="font-italic">
           <u>Mes articles favoris</u>
         </h4>
         <v-list shaped>
           <v-list-item-group color="primary">
             <v-list-item v-for="(item, i) in wishlist" :key="i">
-              <v-list-item-avatar>
+              <v-avatar size="100" tile>
                 <v-img :src="item.src" :alt="item.name"></v-img>
-              </v-list-item-avatar>
+              </v-avatar>
               <v-list-item-content>
                 <v-list-item-title v-text="item.name"></v-list-item-title>
               </v-list-item-content>

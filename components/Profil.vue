@@ -14,7 +14,7 @@
         <h3>Profil mit à jour</h3>
       </v-alert>
     </div>
-    <v-col>
+    <v-col class="white">
       <v-form ref="form" v-model="valid" lazy-validation>
         <v-text-field
           v-model="user.name"
@@ -24,14 +24,30 @@
         ></v-text-field>
         <v-row>
           <v-col sm="12" md="6">
-            <v-subheader>Date de naissance: {{ user.birthDate }}</v-subheader>
-          </v-col>
-          <v-col sm="12" md="6">
-            <v-date-picker
-              v-model="user.birthDate"
-              :first-day-of-week="1"
-              locale="fr-FR"
-            ></v-date-picker>
+            <v-menu
+              v-model="menu2"
+              :close-on-content-click="false"
+              :nudge-right="40"
+              transition="scale-transition"
+              offset-y
+              min-width="290px"
+            >
+              <template v-slot:activator="{ on }">
+                <v-text-field
+                  v-model="user.birthDate"
+                  label="Date de naissance"
+                  readonly
+                  v-on="on"
+                >
+                  <v-icon slot="append" color="#42275a">mdi-calendar</v-icon>
+                </v-text-field>
+              </template>
+              <v-date-picker
+                v-model="user.birthDate"
+                locale="fr-FR"
+                @input="menu2 = false"
+              ></v-date-picker>
+            </v-menu>
           </v-col>
         </v-row>
         <v-text-field
@@ -122,6 +138,7 @@ export default {
     picker: new Date().toISOString().substr(0, 10),
     newUser: [],
     user: [],
+    menu2: false,
     valid: true,
     nameRules: [(v) => !!v || 'Ce champ est obligatoire'],
     addressRules: [

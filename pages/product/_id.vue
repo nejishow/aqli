@@ -23,7 +23,7 @@
         ></v-progress-circular>
       </div>
     </div>
-    <div v-else class="row">
+    <div v-else class="row white">
       <div class="col-sm-12 col-md-10">
         <div class="row">
           <!-- parti des photos  -->
@@ -153,24 +153,24 @@
 
                 <hr />
               </div>
-              <div class="col-sm-12 d-flex flex-column">
-                <div class="mb-3">
-                  <button
-                    type="button"
-                    class="btn btn-success m-2"
-                    @click="buyNow"
-                  >
-                    Acheter Maintenant
-                  </button>
-                  <button
-                    v-if="id"
-                    type="button"
-                    class="btn btn-warning m-2"
-                    @click="addPanier"
-                  >
-                    Mettre dans le panier
-                  </button>
-                </div>
+              <div
+                class="col-sm-12 d-flex align-baseline flex-wrap justify-space-between"
+              >
+                <button
+                  type="button"
+                  class="btn btn-success m-2"
+                  @click="buyNow"
+                >
+                  Acheter Maintenant
+                </button>
+                <button
+                  v-if="id"
+                  type="button"
+                  class="btn btn-warning m-2"
+                  @click="addPanier"
+                >
+                  Mettre dans le panier
+                </button>
                 <div class="text-left">
                   <div>
                     <span v-if="id !== null && liked"
@@ -235,6 +235,7 @@
 import $ from 'jquery'
 import productService from '~/services/productService.js'
 import SameCategory from '~/components/SameCategory.vue'
+import addressService from '~/services/addressService.js'
 export default {
   components: {
     SameCategory
@@ -253,7 +254,8 @@ export default {
       quantité: 1,
       product: [],
       slide: 0,
-      sliding: null
+      sliding: null,
+      boutique: null
     }
   },
   computed: {
@@ -276,18 +278,23 @@ export default {
             await this.getLike()
             this.countPeople = response.data.length
           })
-        this.achat = {
-          name: this.product.name,
-          src: this.src,
-          idProduct: this.product._id,
-          owner: this.product.owner,
-          color: null,
-          size: null,
-          garantit: this.product.garantit,
-          quantity: this.quantité,
-          price: this.product.price,
-          enabled: true
-        }
+        await addressService.getOneBoutique(this.product.owner).then((res) => {
+          this.boutique = res.data
+          this.achat = {
+            name: this.product.name,
+            src: this.src,
+            idProduct: this.product._id,
+            owner: this.product.owner,
+            boutique: this.boutique.name,
+            number: this.boutique.number,
+            color: null,
+            size: null,
+            garantit: this.product.garantit,
+            quantity: this.quantité,
+            price: this.product.price,
+            enabled: true
+          }
+        })
         if (this.product.Couleurs && this.product.Couleurs.length >= 1) {
           await this.chooseColor(this.product.Couleurs[0].color)
         }
