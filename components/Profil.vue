@@ -9,7 +9,7 @@
         border="top"
         icon="mdi-home"
         transition="scale-transition"
-        style="position: fixed"
+        style="position:fixed; z-index:999; margin: 0 auto"
       >
         <h3>Profil mit à jour</h3>
       </v-alert>

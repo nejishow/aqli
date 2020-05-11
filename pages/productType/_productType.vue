@@ -35,7 +35,7 @@
         </v-list>
       </div>
 
-      <div class="col-sm-12 col-md-9">
+      <div class="col-sm-12 col-md-9 white">
         <v-row>
           <v-col
             v-for="(item, index) in products"

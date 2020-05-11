@@ -106,7 +106,7 @@ export default {
           hid: 'description',
           name: 'description',
           content:
-            'Connecter vous sur la plateforme Aqli, et envoyez nous vos commandes!'
+            'Connecter vous sur la plateforme Aqli, et commencer votre shopping!'
         },
         {
           hid: 'keywords',

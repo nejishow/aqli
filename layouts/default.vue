@@ -215,10 +215,7 @@
             </div>
             <hr />
             <div class="col-sm-12">
-              <span
-                >AQLI&copy; {{ new Date().getFullYear() }}, imaginé, designé et
-                crée par AQLI</span
-              >
+              <span>AQLI&copy; {{ new Date().getFullYear() }}</span>
             </div>
           </div>
           <div class="row littleScreen">
@@ -324,7 +321,7 @@ export default {
   },
   methods: {
     async search(event) {
-      const searchWords = event.target.value.split(' ')
+      const searchWords = event.target.value.toLowerCase().split(' ')
       this.searchResults = []
       await this.allProducts.forEach((element) => {
         searchWords.forEach((word) => {
