@@ -1,8 +1,8 @@
 <template>
   <!-- Stack the columns on mobile by making one full-width and the other half-width -->
   <v-col>
-    <div class="row">
-      <div class="col-sm-8 d-flex flex-column">
+    <div class="row justify-content-center">
+      <div class="col-sm-10 d-flex flex-column">
         <v-carousel cycle height="300" class="carousel">
           <v-carousel-item
             v-for="(banner, i) in banners"
@@ -18,9 +18,6 @@
           <Nouveautes class="big"></Nouveautes>
           <Nouveautes class="small" :items="3"></Nouveautes>
         </div>
-      </div>
-      <div class="col-sm-4 border">
-        Pub
       </div>
     </div>
     <div class="row d-flex justify-space-between">
@@ -40,11 +37,11 @@
       <div class="col-sm-12">
         <h6 class="font-weight-bold">Plus de produits</h6>
       </div>
-      <div class="col-sm-12 d-flex justify-content-between flex-wrap">
+      <div class="row">
         <div
           v-for="(item, index) in all"
           :key="index"
-          class="white text-center mb-2"
+          class=" col-12 col-sm-4 col-md-2 white mb-2"
         >
           <router-link
             :to="{

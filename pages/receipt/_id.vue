@@ -1,12 +1,6 @@
 <template>
   <div class="white">
-    <h3>Ma commande</h3>
-    <p>
-      Récapitulatif de la commande effectué le
-      {{ new Date(commands.createdAt).getDate() }}/{{
-        new Date(commands.createdAt).getMonth() + 1
-      }}/{{ new Date(commands.createdAt).getFullYear() }}
-    </p>
+    <h3>Récapitulatif de la commande</h3>
     <div class="col-sm-12 col-md-8 pt-4">
       <v-list shaped>
         <v-list-item-group color="primary">

@@ -10,26 +10,26 @@
               query: { id: item._id }
             }"
           >
-            <v-avatar size="80" tile>
-              <v-img :src="item.pics[0].src" :alt="item.name">
-                <template v-slot:placeholder>
-                  <v-row
-                    class="fill-height ma-0"
-                    align="center"
-                    justify="center"
-                  >
-                    <v-progress-circular
-                      indeterminate
-                      color="#42275a"
-                    ></v-progress-circular>
-                  </v-row>
-                </template>
-              </v-img>
-            </v-avatar>
+            <div class="d-flex flex-column align-center">
+              <v-avatar size="80" tile>
+                <v-img :src="item.pics[0].src" :alt="item.name">
+                  <template v-slot:placeholder>
+                    <v-row
+                      class="fill-height ma-0"
+                      align="center"
+                      justify="center"
+                    >
+                      <v-progress-circular
+                        indeterminate
+                        color="#42275a"
+                      ></v-progress-circular>
+                    </v-row>
+                  </template>
+                </v-img>
+              </v-avatar>
 
-            <v-card-subtitle class=" font-weight-bold h6"
-              >{{ item.price }} fDJ</v-card-subtitle
-            >
+              <small class=" font-weight-bold">{{ item.price }} Fdj</small>
+            </div>
           </router-link>
         </div>
       </carousel>

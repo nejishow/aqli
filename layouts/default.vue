@@ -30,12 +30,7 @@
             </v-list-item>
           </v-list>
         </v-navigation-drawer>
-        <v-app-bar
-          :clipped-left="clipped"
-          collapse-on-scroll
-          app
-          color="#FAFAFA"
-        >
+        <v-app-bar :clipped-left="clipped" collapse-on-scroll app color="white">
           <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
           <v-img
             class="mx-2"
@@ -105,9 +100,6 @@
                 </v-card>
               </v-col>
             </v-row>
-            <v-col>
-              PUB
-            </v-col>
             <nuxt v-show="!deconnection" />
           </v-container>
         </v-content>
@@ -151,12 +143,12 @@
             </v-list-item>
           </v-list>
         </v-navigation-drawer>
-        <v-footer color="#FAFAFA">
+        <v-footer color="white">
           <div class="row bigScreen">
             <div class="col-sm-12 col-md-3">
               <span class="h6">Shopping</span>
 
-              <v-list dense color="#FAFAFA">
+              <v-list dense color="white">
                 <v-list-item
                   v-for="(item, i) in getCategoryMenu"
                   :key="i"
@@ -177,7 +169,7 @@
             </div>
             <div class="col-sm-12 col-md-3">
               <span class="h6">Plus d'information</span>
-              <v-list dense color="#FAFAFA">
+              <v-list dense color="white">
                 <v-list-item>
                   <v-list-item-content>
                     <span class="caption font-weight-light">AQLI</span>
@@ -381,6 +373,6 @@ v-tab {
   background: transparent;
 }
 .wrapper {
-  background: #f3e5f5;
+  background: #f3f4f6;
 }
 </style>
